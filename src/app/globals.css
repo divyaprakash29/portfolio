@@ -3,25 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --canvas: #eff2ed;
+  --canvas-alt: #f8f9f5;
+  --ink: #171b18;
+  --ink-soft: #565f58;
+  --ink-faint: #8b927e;
+  --green: #23824a;
+  --coral: #d8552f;
+  --line: #c7ccc1;
+  --line-strong: #a9af9d;
+
+  --shadow-1: 0 1px 2px rgba(23, 27, 24, 0.06), 0 1px 1px rgba(23, 27, 24, 0.04);
+  --shadow-2: 0 3px 10px rgba(23, 27, 24, 0.09), 0 1px 2px rgba(23, 27, 24, 0.06);
+  --shadow-3: 0 14px 32px rgba(23, 27, 24, 0.12), 0 3px 8px rgba(23, 27, 24, 0.07);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --canvas: #14161a;
+  --canvas-alt: #1b1e21;
+  --ink: #e9ebe4;
+  --ink-soft: #a7ae9e;
+  --ink-faint: #6b7266;
+  --green: #56c687;
+  --coral: #f28763;
+  --line: #2b2f2a;
+  --line-strong: #3b4038;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-3: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.045);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Lenis drives scrolling; native smooth-scroll would fight it.
+   The reduced-motion block below restores instant native scrolling. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::selection {
+  background: var(--green);
+  color: var(--canvas);
+}
+
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
