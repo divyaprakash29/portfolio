@@ -64,7 +64,13 @@ npm run lint
   was tried, engineered carefully (perf-gated, zero mobile requests, verified
   with Playwright network traces), polished to a genuinely good render
   quality — and still rejected on concept grounds, not execution. See
-  `SKILLS.md` History section.
+  `SKILLS.md` History section. **Rejected a second time on 2026-07-12:** a
+  fully spec'd + approved R3F "cinematic scroll" intro (4-act scroll-driven
+  scene, 5 of 7 tasks built and verified) was rolled back mid-build — the
+  user didn't like the scroll-hijacking feel. The site's direction is the
+  Tajmirul-style elegant DOM hero (dark #212121 / neon #00f050 / #dedede,
+  name preloader); scroll animations may come later, but keep them light
+  and DOM-based (Framer Motion / GSAP), not a WebGL scene.
 - **`useReducedMotion()` is `false` on the first render.** Framer's hook only
   flips after mount, so anything gated on it will *mount and then animate away*
   — which is precisely what a reduced-motion user asked not to see. For
