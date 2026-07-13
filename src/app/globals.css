@@ -19,15 +19,15 @@
 }
 
 .dark {
-  --canvas: #14161a;
-  --canvas-alt: #1b1e21;
-  --ink: #e9ebe4;
-  --ink-soft: #a7ae9e;
-  --ink-faint: #6b7266;
-  --green: #56c687;
+  --canvas: #212121;
+  --canvas-alt: #282828;
+  --ink: #dedede;
+  --ink-soft: #a3a3a3;
+  --ink-faint: #6f6f6f;
+  --green: #00f050;
   --coral: #f28763;
-  --line: #2b2f2a;
-  --line-strong: #3b4038;
+  --line: #373737;
+  --line-strong: #4a4a4a;
 
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);

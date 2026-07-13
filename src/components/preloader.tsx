@@ -28,9 +28,10 @@ export function Preloader() {
     if (prefersReduced || sessionStorage.getItem("intro-seen")) {
       setSkip(true);
       setShow(false);
-      return;
     }
-    sessionStorage.setItem("intro-seen", "1");
+    // The flag is set when the curtain finishes (in the hide timeout), not
+    // here: StrictMode double-fires this effect in dev, and setting it on
+    // the first run would make the second run skip its own curtain.
   }, []);
 
   useEffect(() => {
@@ -39,7 +40,10 @@ export function Preloader() {
       return;
     }
     document.body.style.overflow = "hidden";
-    const t = setTimeout(() => setShow(false), 1750);
+    const t = setTimeout(() => {
+      sessionStorage.setItem("intro-seen", "1");
+      setShow(false);
+    }, 1750);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -57,12 +61,12 @@ export function Preloader() {
           <motion.div
             id="preloader"
             key="preloader"
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0e1013]"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0f0f0f]"
             exit={{ y: "-100%" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
             aria-hidden="true"
           >
-            <h2 className="flex font-display text-[clamp(3rem,12vw,9rem)] uppercase leading-none tracking-tight text-[#e9ebe4]">
+            <h2 className="flex font-display text-[clamp(3rem,12vw,9rem)] uppercase leading-none tracking-tight text-[#dedede]">
               {NAME.split("").map((char, i) => (
                 <motion.span
                   key={i}
@@ -73,13 +77,13 @@ export function Preloader() {
                     duration: 0.4,
                     ease: [0.16, 0.84, 0.44, 1],
                   }}
-                  className={i === 0 ? "text-[#56c687]" : undefined}
+                  className={i === 0 ? "text-[#00f050]" : undefined}
                 >
                   {char}
                 </motion.span>
               ))}
               <motion.span
-                className="ml-1 text-[#56c687]"
+                className="ml-1 text-[#00f050]"
                 animate={{ opacity: [1, 0, 1] }}
                 transition={{ duration: 0.7, repeat: Infinity }}
               >

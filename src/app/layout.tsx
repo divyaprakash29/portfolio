@@ -44,7 +44,7 @@ export default function RootLayout({
       <body
         className={`${plexMono.variable} ${instrumentSans.variable} ${anton.variable} font-sans antialiased bg-canvas text-ink`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />
           <Preloader />
           <CustomCursor />

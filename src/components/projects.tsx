@@ -62,7 +62,7 @@ export function Projects() {
         <div className="mx-auto w-full max-w-content px-5 sm:px-8">
           <div className="mb-8 flex items-baseline justify-between lg:mb-10">
             <h2 className="font-mono text-2xl font-medium tracking-tight sm:text-3xl">
-              <span className="text-signal">//</span> projects
+              <span className="text-signal">{"//"}</span> projects
             </h2>
             <span className="font-mono text-sm text-ink-faint">{projects.length} shipped</span>
           </div>
