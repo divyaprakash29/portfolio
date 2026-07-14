@@ -90,8 +90,11 @@ html.custom-cursor-active * {
   animation: preloader-rise 0.3s cubic-bezier(0.16, 0.84, 0.44, 1) both;
 }
 
+/* The curtain only lives ~0.9s — a blinking caret spends half of that
+   invisible, so it rises in after the last letter and stays solid. */
 .preloader-cursor {
-  animation: preloader-blink 0.7s step-end infinite;
+  opacity: 0;
+  animation: preloader-rise 0.3s cubic-bezier(0.16, 0.84, 0.44, 1) 0.3s both;
 }
 
 @keyframes preloader-rise {
@@ -102,11 +105,5 @@ html.custom-cursor-active * {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes preloader-blink {
-  50% {
-    opacity: 0;
   }
 }
