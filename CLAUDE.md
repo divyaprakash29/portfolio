@@ -83,6 +83,13 @@ npm run lint
   instantly.** Setting `show=false` isn't enough — AnimatePresence intercepts
   the removal. To drop something immediately, unmount the `AnimatePresence`
   itself (early `return null`).
+- **Tailwind `/alpha` modifiers silently do nothing on the token colors.**
+  The theme colors are plain `var(--x)` strings, so `bg-ink/70` or
+  `bg-canvas/85` generate no CSS rule at all — the element is just
+  transparent, with no build error. This made the custom cursor invisible
+  once (`cursor: none` + transparent dot = no pointer anywhere). For
+  translucent token colors use a color-mix arbitrary value:
+  `bg-[color-mix(in_srgb,var(--ink)_70%,transparent)]`.
 - **Editing `tailwind.config.ts` requires a dev-server restart.** Config
   changes are NOT hot-reloaded. Adding `fontFamily.display` silently produced
   no `.font-display` utility at all, so the headline kept falling back to the
