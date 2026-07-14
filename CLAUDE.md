@@ -67,10 +67,12 @@ npm run lint
   `SKILLS.md` History section. **Rejected a second time on 2026-07-12:** a
   fully spec'd + approved R3F "cinematic scroll" intro (4-act scroll-driven
   scene, 5 of 7 tasks built and verified) was rolled back mid-build — the
-  user didn't like the scroll-hijacking feel. The site's direction is the
-  Tajmirul-style elegant DOM hero (dark #212121 / neon #00f050 / #dedede,
-  name preloader); scroll animations may come later, but keep them light
-  and DOM-based (Framer Motion / GSAP), not a WebGL scene.
+  user didn't like the scroll-hijacking feel. The site's direction is a
+  Tajmirul-style elegant DOM hero — dark #212121, coral accent (#f28763
+  dark / #d8552f light, token `--accent`), Playfair Display for display
+  type in mixed case, fast (~0.9s) name preloader. The user explicitly
+  rejected green accents. Scroll animations may come later, but keep them
+  light and DOM-based (Framer Motion / GSAP), not a WebGL scene.
 - **`useReducedMotion()` is `false` on the first render.** Framer's hook only
   flips after mount, so anything gated on it will *mount and then animate away*
   — which is precisely what a reduced-motion user asked not to see. For
