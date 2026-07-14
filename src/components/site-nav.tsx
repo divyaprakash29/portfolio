@@ -7,7 +7,9 @@ import { cn } from "@/lib/cn";
 import { ThemeToggle } from "./theme-toggle";
 
 const links = [
-  { href: "#work", label: "Work" },
+  // Work returns when the projects section is redesigned (the pinned
+  // horizontal gallery was pulled — user didn't like the scroll hijack).
+  { href: "#about", label: "About" },
   { href: "#log", label: "Log" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
