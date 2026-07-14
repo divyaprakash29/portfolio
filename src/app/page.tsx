@@ -2,6 +2,7 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { SiteNav } from "@/components/site-nav";
 import { Hero } from "@/components/hero";
 import { Projects } from "@/components/projects";
+import { About } from "@/components/about";
 
 export default function Home() {
   return (
@@ -11,7 +12,8 @@ export default function Home() {
       <main>
         <Hero />
         <Projects />
-        {/* About, Log, Skills, Contact land here in the next checkpoints */}
+        <About />
+        {/* Log, Skills, Contact land here in the next checkpoints */}
       </main>
     </>
   );
