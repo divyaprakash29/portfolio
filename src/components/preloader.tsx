@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const NAME = "DIVYA";
+const NAME = "Divya";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -34,7 +34,7 @@ export function Preloader() {
       return;
     }
     document.body.style.overflow = "hidden";
-    const t = setTimeout(() => setShow(false), 1900);
+    const t = setTimeout(() => setShow(false), 900);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -57,17 +57,17 @@ export function Preloader() {
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
             aria-hidden="true"
           >
-            <h2 className="flex font-display text-[clamp(3rem,12vw,9rem)] uppercase leading-none tracking-tight text-[#dedede]">
+            <h2 className="flex font-display font-medium text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-[#dedede]">
               {NAME.split("").map((char, i) => (
                 <span
                   key={i}
-                  className={`preloader-letter ${i === 0 ? "text-[#00f050]" : ""}`}
-                  style={{ animationDelay: `${0.12 + i * 0.07}s` }}
+                  className="preloader-letter"
+                  style={{ animationDelay: `${0.05 + i * 0.045}s` }}
                 >
                   {char}
                 </span>
               ))}
-              <span className="preloader-cursor ml-1 text-[#00f050]">_</span>
+              <span className="preloader-cursor ml-3 inline-block w-[0.09em] self-stretch bg-[#dedede]" />
             </h2>
           </motion.div>
         )}

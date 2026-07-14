@@ -42,7 +42,8 @@ export function Hero() {
       >
         {/* left: headline block */}
         <div>
-          <h1 className="font-display uppercase leading-[0.85] tracking-tight">
+          {/* Playfair reads best in mixed case with a touch more line room */}
+          <h1 className="font-display font-medium leading-[0.95] tracking-tight">
             <motion.span
               variants={reduceMotion ? undefined : item}
               className="block text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
@@ -70,7 +71,7 @@ export function Hero() {
             <Magnetic strength={0.4}>
               <a
                 href="#contact"
-                className="inline-block bg-signal px-8 py-4 font-display text-lg uppercase tracking-wide text-canvas transition-opacity duration-200 hover:opacity-90 active:scale-[0.97]"
+                className="inline-block bg-signal px-8 py-4 font-mono text-sm uppercase tracking-widest text-canvas transition-opacity duration-200 hover:opacity-90 active:scale-[0.97]"
               >
                 Let&apos;s talk
               </a>
@@ -98,7 +99,7 @@ export function Hero() {
             <div key={s.label}>
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <span className="block font-display text-4xl tabular-nums text-signal sm:text-5xl">
+                <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
                   {s.value}
                 </span>
                 <span className="mt-1 block text-xs text-ink-soft sm:text-sm">{s.label}</span>

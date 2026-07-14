@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Instrument_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/custom-cursor";
@@ -19,12 +19,11 @@ const instrumentSans = Instrument_Sans({
   display: "swap",
 });
 
-// Anton ships a single 400 weight and no variable axes, so an explicit
-// weight is correct here (unlike Instrument Sans — see CLAUDE.md).
-const anton = Anton({
+// Playfair Display is a variable font (400–900 axis) — no weight array,
+// same rule as Instrument Sans (see CLAUDE.md).
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-anton",
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -42,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plexMono.variable} ${instrumentSans.variable} ${anton.variable} font-sans antialiased bg-canvas text-ink`}
+        className={`${plexMono.variable} ${instrumentSans.variable} ${playfair.variable} font-sans antialiased bg-canvas text-ink`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />

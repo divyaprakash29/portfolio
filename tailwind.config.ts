@@ -15,7 +15,7 @@ const config: Config = {
         ink: "var(--ink)",
         "ink-soft": "var(--ink-soft)",
         "ink-faint": "var(--ink-faint)",
-        signal: "var(--green)",
+        signal: "var(--accent)",
         marker: "var(--coral)",
         line: "var(--line)",
         "line-strong": "var(--line-strong)",
@@ -23,7 +23,7 @@ const config: Config = {
       fontFamily: {
         mono: ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
         sans: ["var(--font-instrument-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-anton)", "Impact", "sans-serif"],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
       },
       boxShadow: {
         1: "var(--shadow-1)",

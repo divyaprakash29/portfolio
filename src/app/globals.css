@@ -8,8 +8,8 @@
   --ink: #171b18;
   --ink-soft: #565f58;
   --ink-faint: #8b927e;
-  --green: #23824a;
-  --coral: #d8552f;
+  --accent: #d8552f;
+  --coral: #b23c1c;
   --line: #c7ccc1;
   --line-strong: #a9af9d;
 
@@ -24,8 +24,8 @@
   --ink: #dedede;
   --ink-soft: #a3a3a3;
   --ink-faint: #6f6f6f;
-  --green: #00f050;
-  --coral: #f28763;
+  --accent: #f28763;
+  --coral: #ffab8f;
   --line: #373737;
   --line-strong: #4a4a4a;
 
@@ -60,7 +60,7 @@ body {
 }
 
 ::selection {
-  background: var(--green);
+  background: var(--accent);
   color: var(--canvas);
 }
 
@@ -87,7 +87,7 @@ html.custom-cursor-active * {
    (the curtain is SSR-rendered; JS only handles the lift). */
 .preloader-letter {
   opacity: 0;
-  animation: preloader-rise 0.4s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+  animation: preloader-rise 0.3s cubic-bezier(0.16, 0.84, 0.44, 1) both;
 }
 
 .preloader-cursor {
