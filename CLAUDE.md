@@ -15,9 +15,13 @@ reviewing each checkpoint (screenshot + live dev server) before moving on. See
 - **Framer Motion** for all animation (stagger entrances, scroll reveals,
   hover/press states, the mobile nav's height transition).
 - **next-themes** for light/dark (class-based, toggle in the nav).
-- **GSAP + ScrollTrigger** (`@gsap/react`) — used *only* for the pinned
-  horizontal projects gallery. Everything else stays on Framer Motion; don't
-  mix the two on the same element.
+- **GSAP + ScrollTrigger** (`@gsap/react`) — currently unused: the pinned
+  horizontal projects gallery (its only consumer) was pulled from the page
+  on 2026-07-13 because the user rejected the scroll hijack — the third
+  such rejection (WebGL hero, cinematic scroll intro, pinned gallery).
+  `projects.tsx` stays on disk pending a conventional-scroll redesign.
+  Avoid pinning/scroll-hijack patterns in whatever replaces it; don't mix
+  GSAP and Framer Motion on the same element.
 - No 3D/WebGL library. A Three.js hero was built, polished, and then removed
   at the user's request — see `SKILLS.md` "History" section before
   reintroducing anything WebGL-based here.
