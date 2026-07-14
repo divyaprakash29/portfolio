@@ -32,7 +32,9 @@ export function SiteNav() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b border-transparent bg-canvas/85 backdrop-blur-md transition-shadow duration-300",
+        // color-mix instead of bg-canvas/85: the token is a plain CSS var,
+        // which Tailwind's /alpha modifier can't generate rules for.
+        "sticky top-0 z-40 border-b border-transparent bg-[color-mix(in_srgb,var(--canvas)_85%,transparent)] backdrop-blur-md transition-shadow duration-300",
         scrolled && "border-line-strong shadow-2"
       )}
     >

@@ -58,12 +58,16 @@ export function CustomCursor() {
       style={{ x: sx, y: sy, opacity: visible ? 1 : 0 }}
     >
       {variant === "view" && (
-        <span className="flex h-14 w-14 items-center justify-center rounded-full border border-marker/70 bg-canvas/90 font-mono text-[0.65rem] tracking-wide text-marker shadow-2 backdrop-blur">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--coral)_70%,transparent)] bg-[color-mix(in_srgb,var(--canvas)_90%,transparent)] font-mono text-[0.65rem] tracking-wide text-marker shadow-2 backdrop-blur">
           view
         </span>
       )}
       {variant === "type" && <span className="block h-4 w-[2px] animate-pulse bg-signal" />}
-      {variant === "default" && <span className="block h-2 w-2 rounded-full bg-ink/70" />}
+      {/* bg-ink/70 compiled to nothing (plain-var token), leaving the dot
+          transparent while cursor:none hid the native pointer */}
+      {variant === "default" && (
+        <span className="block h-2 w-2 rounded-full bg-[color-mix(in_srgb,var(--ink)_70%,transparent)]" />
+      )}
     </motion.div>
   );
 }
