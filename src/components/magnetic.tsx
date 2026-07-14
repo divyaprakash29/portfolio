@@ -38,7 +38,9 @@ export function Magnetic({
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ x: reduceMotion ? 0 : sx, y: reduceMotion ? 0 : sy }}
-      className={className}
+      // w-fit: as a full-width block, the wrapper's center sat far right of
+      // the button, so hovering it computed a huge leftward pull
+      className={`w-fit ${className ?? ""}`}
     >
       {children}
     </motion.div>
