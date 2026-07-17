@@ -76,7 +76,7 @@ export function Experience() {
           />
 
           <ol className="space-y-12 lg:space-y-14">
-            {experience.map((e, i) => (
+            {experience.map((e) => (
               <li key={e.hash} className="relative pl-8 sm:pl-12">
                 <MotionConfig reducedMotion="user">
                   {/* node ignites as the fill reaches it */}
