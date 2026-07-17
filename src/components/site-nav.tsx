@@ -10,7 +10,7 @@ const links = [
   // Work returns when the projects section is redesigned (the pinned
   // horizontal gallery was pulled — user didn't like the scroll hijack).
   { href: "#about", label: "About" },
-  { href: "#log", label: "Log" },
+  { href: "#experience", label: "Experience" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
 ];
