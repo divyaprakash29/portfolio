@@ -1,6 +1,7 @@
 import { profile } from "@/data/profile";
 import { Magnetic } from "@/components/magnetic";
 import { Reveal } from "@/components/reveal";
+import { MaskedText } from "@/components/masked-text";
 
 /**
  * Closing section: a big serif invitation, the email as the primary
@@ -19,8 +20,10 @@ export function Contact() {
 
         <Reveal delay={0.08}>
           <p className="mt-10 max-w-3xl font-display text-4xl font-medium leading-tight text-ink sm:text-5xl lg:mt-14 lg:text-6xl">
-            Let&apos;s build something people{" "}
-            <em className="text-signal">actually</em> use.
+            <MaskedText
+              text="Let's build something people actually use."
+              accentWords={["actually"]}
+            />
           </p>
         </Reveal>
 

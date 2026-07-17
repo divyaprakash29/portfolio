@@ -59,9 +59,14 @@ export function SiteNav() {
             <a
               key={link.href}
               href={link.href}
-              className="inline-flex items-center px-2 py-3 text-ink-soft transition-colors hover:text-ink lg:px-3"
+              className="group inline-flex flex-col items-center px-2 py-3 text-ink-soft transition-colors hover:text-ink lg:px-3"
             >
               {link.label}
+              {/* underline sweep, left to right on hover */}
+              <span
+                aria-hidden
+                className="h-px w-full origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+              />
             </a>
           ))}
           <ThemeToggle />

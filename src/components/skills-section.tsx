@@ -31,7 +31,7 @@ export function SkillsSection() {
                   {group.items.map((item) => (
                     <li
                       key={item}
-                      className="rounded-full border border-line px-3 py-1.5 font-mono text-xs text-ink-soft"
+                      className="rounded-full border border-line px-3 py-1.5 font-mono text-xs text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:text-ink"
                     >
                       {item}
                     </li>

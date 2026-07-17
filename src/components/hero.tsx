@@ -1,13 +1,21 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  MotionConfig,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "framer-motion";
 import { profile, stats } from "@/data/profile";
 import { Magnetic } from "@/components/magnetic";
 import { ParticleField } from "@/components/particle-field";
 
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.55 } },
 };
 
 const item: Variants = {
@@ -15,15 +23,58 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 0.84, 0.44, 1] } },
 };
 
+/** One headline line rising out of its own overflow mask. */
+function MaskedLine({
+  children,
+  delay,
+  className,
+}: {
+  children: React.ReactNode;
+  delay: number;
+  className?: string;
+}) {
+  return (
+    <span className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+      <motion.span
+        initial={{ y: "105%" }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.85, delay, ease: [0.16, 0.84, 0.44, 1] }}
+        className={className}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
+
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+
+  // Parallax: as the hero scrolls away, layers drift at different speeds —
+  // particles fastest, headline lagging — pure scroll-linked transforms on
+  // native scrolling. Zeroed out for reduced motion.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const headlineY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const particlesY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const statsY = useTransform(scrollYProgress, [0, 1], [0, 45]);
 
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative flex min-h-[calc(100svh-4.25rem)] items-center overflow-hidden py-16"
     >
-      <ParticleField />
+      <motion.div
+        aria-hidden
+        style={{ y: reduceMotion ? 0 : particlesY }}
+        className="absolute inset-0"
+      >
+        <ParticleField />
+      </motion.div>
 
       {/* vertical email rail */}
       <a
@@ -34,80 +85,84 @@ export function Hero() {
         {profile.email}
       </a>
 
-      <motion.div
-        className="mx-auto grid w-full max-w-content grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.4fr_auto] lg:gap-8"
-        variants={reduceMotion ? undefined : container}
-        initial={reduceMotion ? undefined : "hidden"}
-        animate={reduceMotion ? undefined : "show"}
-      >
-        {/* left: headline block */}
-        <div>
-          {/* Playfair reads best in mixed case with a touch more line room */}
-          <h1 className="font-display font-medium leading-[0.95] tracking-tight">
-            <motion.span
-              variants={reduceMotion ? undefined : item}
-              className="block text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
-            >
-              Frontend
-            </motion.span>
-            <motion.span
-              variants={reduceMotion ? undefined : item}
-              className="block pl-[0.12em] text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
-            >
-              Engineer
-            </motion.span>
-          </h1>
-
-          <motion.p
-            variants={reduceMotion ? undefined : item}
-            className="mt-7 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg"
-          >
-            Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. I build interfaces
-            the way I test them — with real users, not just unit tests. Two years shipping
-            production React, now sharpening the design side at Northeastern.
-          </motion.p>
-
-          <motion.div variants={reduceMotion ? undefined : item} className="mt-8">
-            <Magnetic strength={0.4}>
-              <a
-                href="#contact"
-                className="inline-block bg-signal px-8 py-4 font-mono text-sm uppercase tracking-widest text-canvas transition-opacity duration-200 hover:opacity-90 active:scale-[0.97]"
-              >
-                Let&apos;s talk
-              </a>
-            </Magnetic>
-          </motion.div>
-
-          <motion.p
-            variants={reduceMotion ? undefined : item}
-            className="mt-5 flex items-center gap-2.5 text-sm text-ink-soft"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
-            </span>
-            Available for full-time opportunities
-          </motion.p>
-        </div>
-
-        {/* right: stat stack */}
-        <motion.dl
-          variants={reduceMotion ? undefined : item}
-          className="flex gap-8 lg:flex-col lg:gap-10 lg:text-right"
+      {/* reducedMotion="user": SSR markup stays identical for every client;
+          reduced-motion users get opacity-only entrances. */}
+      <MotionConfig reducedMotion="user">
+        <motion.div
+          className="mx-auto grid w-full max-w-content grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.4fr_auto] lg:gap-8"
+          variants={container}
+          initial="hidden"
+          animate="show"
         >
-          {stats.map((s) => (
-            <div key={s.label}>
-              <dt className="sr-only">{s.label}</dt>
-              <dd>
-                <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
-                  {s.value}
-                </span>
-                <span className="mt-1 block text-xs text-ink-soft sm:text-sm">{s.label}</span>
-              </dd>
-            </div>
-          ))}
-        </motion.dl>
-      </motion.div>
+          {/* left: headline block */}
+          <div>
+            <motion.h1
+              style={{ y: reduceMotion ? 0 : headlineY }}
+              className="font-display font-medium leading-[0.95] tracking-tight"
+            >
+              <MaskedLine
+                delay={0.15}
+                className="block text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
+              >
+                Frontend
+              </MaskedLine>
+              <MaskedLine
+                delay={0.28}
+                className="block pl-[0.12em] text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
+              >
+                Engineer
+              </MaskedLine>
+            </motion.h1>
+
+            <motion.p
+              variants={item}
+              className="mt-7 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg"
+            >
+              Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. I build
+              interfaces the way I test them — with real users, not just unit tests. Two years
+              shipping production React, now sharpening the design side at Northeastern.
+            </motion.p>
+
+            <motion.div variants={item} className="mt-8">
+              <Magnetic strength={0.4}>
+                <a
+                  href="#contact"
+                  className="inline-block bg-signal px-8 py-4 font-mono text-sm uppercase tracking-widest text-canvas transition-opacity duration-200 hover:opacity-90 active:scale-[0.97]"
+                >
+                  Let&apos;s talk
+                </a>
+              </Magnetic>
+            </motion.div>
+
+            <motion.p variants={item} className="mt-5 flex items-center gap-2.5 text-sm text-ink-soft">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
+              </span>
+              Available for full-time opportunities
+            </motion.p>
+          </div>
+
+          {/* right: stat stack */}
+          <motion.dl
+            variants={item}
+            style={{ y: reduceMotion ? 0 : statsY }}
+            className="flex gap-8 lg:flex-col lg:gap-10 lg:text-right"
+          >
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
+                    {s.value}
+                  </span>
+                  <span className="mt-1 block text-xs text-ink-soft sm:text-sm">{s.label}</span>
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
+        </motion.div>
+      </MotionConfig>
     </section>
   );
 }

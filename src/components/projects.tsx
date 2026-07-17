@@ -24,14 +24,20 @@ export function Projects() {
           {projects.map((p, i) => (
             <li key={p.slug} className="group border-b border-line">
               <Reveal>
-                <div className="grid grid-cols-1 gap-x-10 gap-y-4 py-10 lg:grid-cols-[auto_1.1fr_1fr] lg:py-12">
+                <div className="grid grid-cols-1 gap-x-10 gap-y-4 py-10 transition-transform duration-300 ease-out group-hover:translate-x-2 lg:grid-cols-[auto_1.1fr_1fr] lg:py-12">
                   <span className="font-mono text-sm text-ink-faint lg:pt-3">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
                   <div>
-                    <h3 className="font-display text-3xl font-medium leading-tight text-ink transition-colors duration-300 group-hover:text-signal sm:text-4xl">
+                    <h3 className="flex items-baseline gap-3 font-display text-3xl font-medium leading-tight text-ink transition-colors duration-300 group-hover:text-signal sm:text-4xl">
                       {p.tag}
+                      <span
+                        aria-hidden
+                        className="-translate-x-2 text-2xl opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+                      >
+                        →
+                      </span>
                     </h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft sm:text-base">
                       {p.desc}
@@ -49,7 +55,7 @@ export function Projects() {
                       {p.stack.map((s) => (
                         <li
                           key={s}
-                          className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft"
+                          className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:text-ink"
                         >
                           {s}
                         </li>

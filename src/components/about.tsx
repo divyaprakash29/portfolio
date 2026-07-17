@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { profile, aboutViews } from "@/data/profile";
 import { Reveal } from "@/components/reveal";
+import { MaskedText } from "@/components/masked-text";
 import { cn } from "@/lib/cn";
 
 type Lens = keyof typeof aboutViews;
@@ -38,7 +39,7 @@ export function About() {
           {/* narrative */}
           <Reveal>
             <p className="max-w-xl font-display text-3xl font-medium leading-snug text-ink sm:text-4xl">
-              The interface <em className="text-signal">is</em> the product.
+              <MaskedText text="The interface is the product." accentWords={["is"]} />
             </p>
             <p className="mt-7 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
               {profile.lede}
