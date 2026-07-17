@@ -18,46 +18,57 @@ export const stats = [
   { value: "35%", label: "Faster Load Times" },
 ];
 
+// Mirrors "Divya Prakash_FrontEnd_Engineer.pdf" (WORK EXPERIENCE section).
+// Wording is trimmed for the web but every claim and number is from the
+// résumé — keep it that way.
 export const experience = [
   {
-    hash: "a3f9c2e",
     company: "Prodapt Solutions",
+    location: "India",
     title: "Software Engineer",
     dates: "Oct 2021 – Aug 2023",
-    scope: "feat(ui):",
-    message: "responsive component overhaul",
-    detail: "Rebuilt core flows for consistency across breakpoints and devices.",
-    stat: "+20% user engagement",
+    highlights: [
+      {
+        text: "Built responsive web applications with JavaScript, Next.js, Tailwind CSS, and Material UI across telecom customer platforms.",
+        stat: "+20% user engagement",
+      },
+      {
+        text: "Designed and integrated RESTful APIs with Axios for real-time data flow across billing and service-management systems.",
+        stat: "−25% support requests",
+      },
+      {
+        text: "Cut load times with code splitting and lazy loading while keeping Lighthouse scores above 90.",
+        stat: "−35% load time",
+      },
+      {
+        text: "Turned Figma and Balsamiq wireframes into production-ready UI with cross-functional agile teams.",
+        stat: "+20% faster delivery",
+      },
+      {
+        text: "Validated UI with Jest and ran usability testing aligned with user-centered design.",
+        stat: "−30% UI defects",
+      },
+    ],
   },
   {
-    hash: "7b1e881",
-    company: "Prodapt Solutions",
-    title: "Software Engineer",
-    dates: "Oct 2021 – Aug 2023",
-    scope: "fix(api):",
-    message: "trim redundant calls, tighten error states",
-    detail: "Optimized request patterns behind the slowest support-ticket flows.",
-    stat: "−25% support tickets",
-  },
-  {
-    hash: "d92a41f",
-    company: "Prodapt Solutions",
-    title: "Software Engineer",
-    dates: "Oct 2021 – Aug 2023",
-    scope: "perf(bundle):",
-    message: "code-splitting + lazy loading",
-    detail: "Deferred non-critical chunks on the routes users hit first.",
-    stat: "+35% load performance",
-  },
-  {
-    hash: "f04c10a",
     company: "Tech Fortune Technologies",
+    location: "India",
     title: "Front End Engineer Intern",
-    dates: "Mar – Apr 2021",
-    scope: "feat(components):",
-    message: "React + TypeScript starter kit",
-    detail: "Shared component patterns so future screens stopped reinventing them.",
-    stat: "−20% UI inconsistencies",
+    dates: "Mar 2021 – Apr 2021",
+    highlights: [
+      {
+        text: "Built responsive UI components with React.js, TypeScript, and Redux for cross-device compatibility.",
+        stat: "−20% UI inconsistencies",
+      },
+      {
+        text: "Implemented Redux Toolkit state management and optimized rendering performance.",
+        stat: "−25% component load time",
+      },
+      {
+        text: "Collaborated on prototyping and interaction design with Framer and Notion, contributing to design systems.",
+        stat: null,
+      },
+    ],
   },
 ];
 

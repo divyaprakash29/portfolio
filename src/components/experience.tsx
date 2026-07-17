@@ -75,34 +75,41 @@ export function Experience() {
             className="absolute bottom-3 left-[5px] top-3 w-px origin-top bg-signal"
           />
 
-          <ol className="space-y-12 lg:space-y-14">
+          <ol className="space-y-14 lg:space-y-16">
             {experience.map((e) => (
-              <li key={e.hash} className="relative pl-8 sm:pl-12">
+              <li key={e.company} className="relative pl-8 sm:pl-12">
                 <MotionConfig reducedMotion="user">
                   {/* node ignites as the fill reaches it */}
                   <motion.span
                     aria-hidden
                     initial={{ backgroundColor: "var(--canvas)", scale: 1 }}
                     whileInView={{ backgroundColor: "var(--accent)", scale: 1.15 }}
-                    viewport={{ once: true, margin: "-40% 0px -40% 0px" }}
+                    viewport={{ once: true, margin: "-30% 0px -30% 0px" }}
                     transition={{ duration: 0.35 }}
                     className="absolute left-0 top-[0.3rem] h-[11px] w-[11px] rounded-full border-2 border-signal"
                   />
                 </MotionConfig>
                 <Reveal delay={0.05}>
                   <p className="font-mono text-xs tracking-widest text-ink-faint">{e.dates}</p>
-                  <h3 className="mt-2 text-lg font-semibold text-ink first-letter:uppercase sm:text-xl">
-                    {e.message}
-                  </h3>
+                  <h3 className="mt-2 text-lg font-semibold text-ink sm:text-xl">{e.title}</h3>
                   <p className="mt-1 font-mono text-xs tracking-wide text-ink-faint">
-                    {e.company} · {e.title}
+                    {e.company} · {e.location}
                   </p>
-                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft sm:text-base">
-                    {e.detail}
-                  </p>
-                  <p className="mt-3">
-                    <CountStat stat={e.stat} />
-                  </p>
+                  <ul className="mt-5 max-w-2xl space-y-4">
+                    {e.highlights.map((h) => (
+                      <li
+                        key={h.text}
+                        className="border-l border-line pl-4 text-sm leading-relaxed text-ink-soft sm:text-base"
+                      >
+                        {h.text}
+                        {h.stat && (
+                          <span className="mt-1 block">
+                            <CountStat stat={h.stat} />
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </Reveal>
               </li>
             ))}
