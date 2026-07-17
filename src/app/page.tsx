@@ -4,6 +4,7 @@ import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Log } from "@/components/log";
 import { SkillsSection } from "@/components/skills-section";
+import { Contact } from "@/components/contact";
 
 export default function Home() {
   return (
@@ -15,8 +16,9 @@ export default function Home() {
         <About />
         <Log />
         <SkillsSection />
-        {/* Projects (redesigned, no pinned scroll) and Contact land here
-            in later checkpoints */}
+        <Contact />
+        {/* Projects (redesigned, no pinned scroll) lands between Log and
+            Skills in a later checkpoint */}
       </main>
     </>
   );
