@@ -80,14 +80,16 @@ export const projects = [
     detail:
       "Built solo end to end: schema design, REST API, and the React client. PWA install prompts kept freelancers checking bids without an app-store detour.",
     stack: ["React", "Node.js", "Express", "MongoDB", "Stripe", "PWA"],
+    stat: "25+ transactions in month one",
   },
   {
     slug: "libraryapp",
     tag: "LibraryApp",
     desc: "Northeastern's library, redesigned mobile-first. Room booking and event discovery, shaped by real usability testing.",
     detail:
-      "Ran three rounds of usability testing on paper and Figma prototypes before a line of code shipped. The room-booking flow changed twice because of what those sessions turned up.",
+      "Ran usability testing with 15+ users on paper and Figma prototypes before a line of code shipped. The room-booking flow changed twice because of what those sessions turned up.",
     stack: ["Figma", "UX Research", "Prototyping", "Accessibility"],
+    stat: "−40% booking steps",
   },
   {
     slug: "healthsystem",
@@ -96,6 +98,7 @@ export const projects = [
     detail:
       "A coursework capstone: one shared patient database behind a Java Swing front end, built for three role types — front desk, nursing, and diagnostics.",
     stack: ["Java Swing", "Systems Design"],
+    stat: null,
   },
   {
     slug: "cloudnativeapp",
@@ -104,6 +107,7 @@ export const projects = [
     detail:
       "Infrastructure as code from day one — a single Terraform apply stands up the VPC and RDS instance, and GitHub Actions deploys on every push to main.",
     stack: ["Python", "FastAPI", "AWS", "Terraform", "CI/CD"],
+    stat: null,
   },
 ];
 

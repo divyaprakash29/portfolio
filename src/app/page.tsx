@@ -3,6 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Experience } from "@/components/experience";
+import { Projects } from "@/components/projects";
 import { SkillsSection } from "@/components/skills-section";
 import { Contact } from "@/components/contact";
 
@@ -15,10 +16,9 @@ export default function Home() {
         <Hero />
         <About />
         <Experience />
+        <Projects />
         <SkillsSection />
         <Contact />
-        {/* Projects (redesigned, no pinned scroll) lands between Log and
-            Skills in a later checkpoint */}
       </main>
     </>
   );

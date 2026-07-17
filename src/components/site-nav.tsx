@@ -11,6 +11,7 @@ const links = [
   // horizontal gallery was pulled — user didn't like the scroll hijack).
   { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
+  { href: "#projects", label: "Projects" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
 ];
