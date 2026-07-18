@@ -107,24 +107,3 @@ html.custom-cursor-active * {
     transform: translateY(0);
   }
 }
-
-/* Marquee ribbon: pure CSS so it costs nothing; freezes for reduced motion. */
-.marquee-track {
-  animation: marquee 36s linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
-}
