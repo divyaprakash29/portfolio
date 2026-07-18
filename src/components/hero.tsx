@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
+  animate,
   motion,
   MotionConfig,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -24,6 +26,54 @@ const item: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 0.84, 0.44, 1] } },
 };
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/**
+ * A hero stat that counts up from zero once, on load. Renders the real
+ * value in the SSR HTML (crawlers + no-JS see the true number), then a
+ * layout effect resets it to 0 before paint so the count starts clean.
+ * Reduced-motion users just get the final number.
+ */
+function HeroStatValue({ value, delay }: { value: string; delay: number }) {
+  const reduce = useReducedMotion();
+  const parsed = useMemo(() => {
+    const m = value.match(/^(\d+)(.*)$/);
+    return m ? { target: parseInt(m[1], 10), suffix: m[2] } : null;
+  }, [value]);
+
+  const mv = useMotionValue(parsed?.target ?? 0);
+  const [display, setDisplay] = useState(parsed?.target ?? 0);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!parsed || reduce) return;
+    mv.set(0);
+    setDisplay(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!parsed || reduce) return;
+    const unsub = mv.on("change", (v) => setDisplay(Math.round(v)));
+    const controls = animate(mv, parsed.target, {
+      duration: 1.1,
+      delay,
+      ease: [0.16, 0.84, 0.44, 1],
+    });
+    return () => {
+      controls.stop();
+      unsub();
+    };
+  }, [parsed, reduce, delay, mv]);
+
+  if (!parsed) return <>{value}</>;
+  return (
+    <>
+      {display}
+      {parsed.suffix}
+    </>
+  );
+}
 
 /**
  * One headline line rising letter by letter out of an overflow mask.
@@ -164,12 +214,12 @@ export function Hero() {
             style={{ y: reduceMotion ? 0 : statsY }}
             className="flex gap-8 lg:flex-col lg:gap-10 lg:text-right"
           >
-            {stats.map((s) => (
+            {stats.map((s, i) => (
               <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
                   <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
-                    {s.value}
+                    <HeroStatValue value={s.value} delay={0.9 + i * 0.12} />
                   </span>
                   <span className="mt-1 block text-xs text-ink-soft sm:text-sm">{s.label}</span>
                 </dd>

@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const NAME = "Divya";
+const SUBTITLE = "Frontend Engineer";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -15,7 +16,7 @@ export function Preloader() {
   const [show, setShow] = useState(true);
   // When true we drop <AnimatePresence> entirely rather than setting show=false,
   // because AnimatePresence would otherwise intercept the removal and play its
-  // 0.8s exit — the one thing a reduced-motion user asked not to see.
+  // exit — the one thing a reduced-motion user asked not to see.
   const [skip, setSkip] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -34,7 +35,8 @@ export function Preloader() {
       return;
     }
     document.body.style.overflow = "hidden";
-    const t = setTimeout(() => setShow(false), 900);
+    // Hold just long enough for the name + rule to land, then lift.
+    const t = setTimeout(() => setShow(false), 620);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -52,23 +54,32 @@ export function Preloader() {
           <motion.div
             id="preloader"
             key="preloader"
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0f0f0f] motion-reduce:hidden"
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#0f0f0f] motion-reduce:hidden"
             exit={{ y: "-100%" }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.62, ease: [0.76, 0, 0.24, 1] }}
             aria-hidden="true"
           >
-            <h2 className="flex font-display font-medium text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-[#dedede]">
-              {NAME.split("").map((char, i) => (
-                <span
-                  key={i}
-                  className="preloader-letter"
-                  style={{ animationDelay: `${0.05 + i * 0.045}s` }}
-                >
-                  {char}
-                </span>
-              ))}
-              <span className="preloader-cursor ml-3 inline-block w-[0.09em] self-stretch bg-[#dedede]" />
-            </h2>
+            {/* one overflow mask around the whole word; letters rise on a
+                stagger from behind it. pb/-mb keeps the 'y' descender uncut. */}
+            <div className="overflow-hidden pb-[0.16em] -mb-[0.16em]">
+              <h2 className="flex font-display font-medium text-[clamp(3rem,12vw,9rem)] leading-none tracking-tight text-[#ededed]">
+                {NAME.split("").map((char, i) => (
+                  <span
+                    key={i}
+                    className="pl-letter"
+                    style={{ animationDelay: `${0.04 + i * 0.055}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </h2>
+            </div>
+
+            <div className="pl-rule mt-6 h-px w-16 bg-[#f28763] sm:w-20" />
+
+            <p className="pl-sub mt-5 font-mono text-[0.7rem] uppercase tracking-[0.32em] text-[#8f8f8f] sm:text-xs">
+              {SUBTITLE}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
