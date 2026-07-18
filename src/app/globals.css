@@ -97,6 +97,24 @@ html.custom-cursor-active * {
   animation: preloader-rise 0.3s cubic-bezier(0.16, 0.84, 0.44, 1) 0.3s both;
 }
 
+/* Hero spotlight sweep (adapted from 21st.dev / Aceternity): fades and
+   glides in once after the preloader curtain lifts, then holds. The
+   reduced-motion block above collapses it to an instant static glow. */
+.animate-spotlight {
+  animation: spotlight 2s ease 1.1s 1 forwards;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
 @keyframes preloader-rise {
   from {
     opacity: 0;

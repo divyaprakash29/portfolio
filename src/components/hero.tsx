@@ -10,8 +10,10 @@ import {
   type Variants,
 } from "framer-motion";
 import { profile, stats } from "@/data/profile";
+import { cn } from "@/lib/cn";
 import { Magnetic } from "@/components/magnetic";
 import { ParticleField } from "@/components/particle-field";
+import { Spotlight } from "@/components/spotlight";
 
 const container: Variants = {
   hidden: {},
@@ -23,26 +25,35 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 0.84, 0.44, 1] } },
 };
 
-/** One headline line rising out of its own overflow mask. */
-function MaskedLine({
-  children,
+/**
+ * One headline line rising letter by letter out of an overflow mask.
+ * Each letter also swaps color on hover (hoverClass) — a quiet
+ * touch-nothing-moves interaction, no looping animation.
+ */
+function LetterLine({
+  text,
   delay,
   className,
+  hoverClass,
 }: {
-  children: React.ReactNode;
+  text: string;
   delay: number;
   className?: string;
+  hoverClass: string;
 }) {
   return (
-    <span className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
-      <motion.span
-        initial={{ y: "105%" }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.85, delay, ease: [0.16, 0.84, 0.44, 1] }}
-        className={className}
-      >
-        {children}
-      </motion.span>
+    <span aria-hidden className={cn("block overflow-hidden pb-[0.08em] -mb-[0.08em]", className)}>
+      {text.split("").map((ch, i) => (
+        <motion.span
+          key={i}
+          initial={{ y: "110%" }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.7, delay: delay + i * 0.045, ease: [0.16, 0.84, 0.44, 1] }}
+          className={cn("inline-block transition-colors duration-300", hoverClass)}
+        >
+          {ch}
+        </motion.span>
+      ))}
     </span>
   );
 }
@@ -76,6 +87,9 @@ export function Hero() {
         <ParticleField />
       </motion.div>
 
+      {/* coral light sweep, once, after the preloader lifts (dark only) */}
+      <Spotlight className="-top-40 left-0 hidden md:-top-20 md:left-40 dark:block" />
+
       {/* vertical email rail */}
       <a
         href={`mailto:${profile.email}`}
@@ -89,7 +103,7 @@ export function Hero() {
           reduced-motion users get opacity-only entrances. */}
       <MotionConfig reducedMotion="user">
         <motion.div
-          className="mx-auto grid w-full max-w-content grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.4fr_auto] lg:gap-8"
+          className="relative z-10 mx-auto grid w-full max-w-content grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.4fr_auto] lg:gap-8"
           variants={container}
           initial="hidden"
           animate="show"
@@ -97,21 +111,22 @@ export function Hero() {
           {/* left: headline block */}
           <div>
             <motion.h1
+              aria-label="Frontend Engineer"
               style={{ y: reduceMotion ? 0 : headlineY }}
               className="font-display font-medium leading-[0.95] tracking-tight"
             >
-              <MaskedLine
+              <LetterLine
+                text="Frontend"
                 delay={0.15}
-                className="block text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
-              >
-                Frontend
-              </MaskedLine>
-              <MaskedLine
-                delay={0.28}
-                className="block pl-[0.12em] text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
-              >
-                Engineer
-              </MaskedLine>
+                className="text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
+                hoverClass="hover:text-ink"
+              />
+              <LetterLine
+                text="Engineer"
+                delay={0.4}
+                className="pl-[0.12em] text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
+                hoverClass="hover:text-signal"
+              />
             </motion.h1>
 
             <motion.p
