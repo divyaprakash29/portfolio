@@ -84,13 +84,16 @@ html.custom-cursor-active * {
 }
 
 /* Preloader entrance — pure CSS so the name paints before React hydrates
-   (the curtain is SSR-rendered; JS only handles the lift). The name rises
-   out of an overflow mask, letter by letter; a coral rule then draws
-   itself beneath it, and a mono subtitle fades in. */
+   (the curtain is SSR-rendered; JS only handles the lift). Three overlapping
+   moves on a ~1.9s budget: letters rise out of an overflow mask, the whole
+   word settles inward from open tracking, and a coral rule draws beneath it.
+   Everything eases on expo-out (0.16,1,0.3,1) — a long, decelerating tail is
+   what separates "elegant" from "fast"; the earlier snappier curves read as
+   abrupt under a serif this high-contrast. */
 .pl-letter {
   display: inline-block;
   transform: translateY(115%);
-  animation: pl-rise 0.6s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+  animation: pl-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes pl-rise {
@@ -99,28 +102,38 @@ html.custom-cursor-active * {
   }
 }
 
+/* The tracking settle. This animates letter-spacing, which is a layout
+   property and normally worth avoiding — but the curtain is the only thing
+   on screen and it's 13 glyphs, so the reflow cost is irrelevant here and
+   no compositor-only property produces this effect without distorting the
+   letterforms (scaleX would stretch them).
+
+   Ease-in-out, NOT the expo-out used everywhere else: expo resolved 97% of
+   the spacing in the first 450ms (measured), so the word snapped shut and
+   then sat motionless for 800ms. Spreading the travel across the full
+   duration is what makes this read as a settle rather than a snap. */
+.pl-name {
+  animation: pl-track 1.25s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes pl-track {
+  from {
+    letter-spacing: 0.14em;
+  }
+  to {
+    letter-spacing: -0.01em;
+  }
+}
+
 .pl-rule {
   transform: scaleX(0);
   transform-origin: center;
-  animation: pl-rule 0.5s cubic-bezier(0.16, 0.84, 0.44, 1) 0.32s both;
+  animation: pl-rule 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
 }
 
 @keyframes pl-rule {
   to {
     transform: scaleX(1);
-  }
-}
-
-.pl-sub {
-  opacity: 0;
-  transform: translateY(6px);
-  animation: pl-fade 0.5s ease 0.44s both;
-}
-
-@keyframes pl-fade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 

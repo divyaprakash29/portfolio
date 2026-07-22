@@ -74,7 +74,7 @@ npm run lint
   user didn't like the scroll-hijacking feel. The site's direction is a
   Tajmirul-style elegant DOM hero — dark #212121, coral accent (#f28763
   dark / #d8552f light, token `--accent`), Playfair Display for display
-  type in mixed case, fast (~0.9s) name preloader. The user explicitly
+  type in mixed case, a ~1.9s "DIVYA PRAKASH" preloader. The user explicitly
   rejected green accents. Scroll animations may come later, but keep them
   light and DOM-based (Framer Motion / GSAP), not a WebGL scene.
 - **`useReducedMotion()` is `false` on the first render.** Framer's hook only
@@ -87,6 +87,25 @@ npm run lint
   instantly.** Setting `show=false` isn't enough — AnimatePresence intercepts
   the removal. To drop something immediately, unmount the `AnimatePresence`
   itself (early `return null`).
+- **Expo-out is the wrong curve for a slow "settle" over a value range.**
+  `cubic-bezier(0.16,1,0.3,1)` resolves ~97% of its travel in the first third
+  of the duration — great for something entering from offscreen, useless for
+  the preloader's letter-spacing settle, which snapped shut and then sat
+  motionless for 800ms while the timeline said it was still animating. Use an
+  ease-in-out (`cubic-bezier(0.65,0,0.35,1)`) when the *middle* of the motion
+  is what should be seen. Note this is invisible to code review and to
+  wall-clock screenshots — see the seeking tip below.
+- **To inspect a specific animation frame, seek it — don't sleep to it.**
+  `page.waitForTimeout(450)` lands hundreds of ms late (screenshot latency +
+  dev-mode hydration), which made a broken easing curve look fine. Instead:
+  `document.getAnimations().forEach(a => a.pause())`, then set
+  `a.currentTime = ms`. Deterministic, and it's how the easing bug above was
+  actually found. Script: `seek-preloader.mjs` in the scratch dir.
+- **Splitting text into per-letter `inline-block` spans eats the spaces.**
+  A span whose only child is a normal space collapses to zero width, so
+  "DIVYA PRAKASH" renders as "DIVYAPRAKASH" with no error. Substitute a
+  non-breaking space (` ` as an escape, not a literal — a literal nbsp
+  in the source silently breaks `Edit`'s string matching).
 - **Tailwind `/alpha` modifiers silently do nothing on the token colors.**
   The theme colors are plain `var(--x)` strings, so `bg-ink/70` or
   `bg-canvas/85` generate no CSS rule at all — the element is just
