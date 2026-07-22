@@ -14,6 +14,7 @@ import {
 } from "framer-motion";
 import { experience } from "@/data/profile";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 
 /** "+20% user engagement" → counts 0→20 when scrolled into view. */
 function CountStat({ stat }: { stat: string }) {
@@ -60,11 +61,7 @@ export function Experience() {
   return (
     <section id="experience" className="relative border-t border-line py-20 lg:py-28">
       <div className="mx-auto w-full max-w-content px-5 sm:px-8">
-        <Reveal>
-          <h2 className="font-mono text-2xl font-medium tracking-tight sm:text-3xl">
-            <span className="text-signal">{"//"}</span> work experience
-          </h2>
-        </Reveal>
+        <SectionHeading label="work experience" />
 
         <div ref={railRef} className="relative mt-10 lg:mt-14">
           {/* track + scroll-drawn fill */}

@@ -5,6 +5,7 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { profile, aboutViews } from "@/data/profile";
 import { Reveal } from "@/components/reveal";
 import { MaskedText } from "@/components/masked-text";
+import { SectionHeading } from "@/components/section-heading";
 import { cn } from "@/lib/cn";
 
 type Lens = keyof typeof aboutViews;
@@ -29,11 +30,7 @@ export function About() {
   return (
     <section id="about" className="relative border-t border-line py-20 lg:py-28">
       <div className="mx-auto w-full max-w-content px-5 sm:px-8">
-        <Reveal>
-          <h2 className="font-mono text-2xl font-medium tracking-tight sm:text-3xl">
-            <span className="text-signal">{"//"}</span> about
-          </h2>
-        </Reveal>
+        <SectionHeading label="about" />
 
         <div className="mt-10 grid grid-cols-1 gap-12 lg:mt-14 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           {/* narrative */}
