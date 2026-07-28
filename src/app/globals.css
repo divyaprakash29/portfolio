@@ -11,8 +11,13 @@
   --ink: #131517;
   --ink-soft: #3a3e42;
   --ink-faint: #4e5257;
-  --accent: #d8552f;
-  --coral: #b23c1c;
+  /* More saturated but DEEPER than the #d8552f it replaces, not brighter.
+     On a near-white canvas the old value was never muddy — it was failing
+     contrast (3.17:1 on the 14px mono stat text, under the 4.5 AA wants). Any
+     lighter and that gets worse, so the brief "more saturated, less grey"
+     is delivered by dropping the salmon and raising chroma instead. 4.83:1. */
+  --accent: #b33608;
+  --coral: #8c2b08;
   --line: #d9e1e5;
   --line-strong: #b8c5cc;
 
@@ -59,8 +64,11 @@
      nav links, chips, and small mono labels. */
   --ink-soft: #d4d6d8;
   --ink-faint: #b3b5b7;
-  --accent: #f28763;
-  --coral: #ffab8f;
+  /* #f28763 was a desaturated salmon, which is why it went muddy against the
+     teal wash — low-chroma warm over cool mixes toward brown. Same hue family,
+     chroma pushed up and lightness with it. */
+  --accent: #ff7a4d;
+  --coral: #ffa07a;
   --line: #21383f;
   --line-strong: #2f4c56;
 

@@ -77,7 +77,7 @@ npm run lint
   fully spec'd + approved R3F "cinematic scroll" intro (4-act scroll-driven
   scene, 5 of 7 tasks built and verified) was rolled back mid-build — the
   user didn't like the scroll-hijacking feel. The site's direction is a
-  Tajmirul-style elegant DOM hero — coral accent (#f28763 dark / #d8552f
+  Tajmirul-style elegant DOM hero — coral accent (#ff7a4d dark / #b33608
   light, token `--accent`), Fraunces for display type in mixed case, Inter
   for body, a ~1.9s "DIVYA PRAKASH" preloader. The user explicitly
   rejected green accents. Scroll animations may come later, but keep them
@@ -95,10 +95,9 @@ npm run lint
   captions (`--ink-faint`) and the accent stat text toward failing AA.
   Measure it — `contrast-check.js` in the scratch dir screenshots the field
   with content hidden, samples the gradient at five viewport heights, and
-  prints ratios per token. Known outstanding issue: light-theme `--accent`
-  on small text is ~3.2–3.7:1, under the 4.5 needed for normal text. It was
-  already failing before the retheme; fixing it means darkening the brand
-  coral, which is the user's call.
+  prints ratios per token. Every token currently clears AA for normal text in
+  both themes; worst case is 4.74 (dark `--accent` at the bottom of the
+  gradient). Don't lighten `--wash-bot` or the accent without re-running it.
 - **`useReducedMotion()` is `false` on the first render.** Framer's hook only
   flips after mount, so anything gated on it will *mount and then animate away*
   — which is precisely what a reduced-motion user asked not to see. For
