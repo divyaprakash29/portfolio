@@ -41,10 +41,10 @@ export function About() {
             <p className="max-w-xl font-display text-3xl font-medium leading-snug text-ink sm:text-4xl">
               <MaskedText text="The interface is the product." accentWords={["is"]} />
             </p>
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-ink sm:text-lg">
               {profile.lede}
             </p>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink sm:text-lg">
               These days that means Boston: an M.S. in Information Systems at
               Northeastern, with as many hours in Figma and usability sessions
               as in React — because the best fixes I&apos;ve shipped started as

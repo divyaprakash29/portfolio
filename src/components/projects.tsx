@@ -45,7 +45,7 @@ export function Projects() {
                         →
                       </span>
                     </h3>
-                    <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft sm:text-base">
+                    <p className="mt-3 max-w-md text-sm leading-relaxed text-ink sm:text-base">
                       {p.desc}
                     </p>
                     {p.stat && (

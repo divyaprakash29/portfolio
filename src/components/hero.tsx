@@ -166,11 +166,14 @@ export function Hero() {
               style={{ y: reduceMotion ? 0 : headlineY }}
               className="font-display font-medium leading-[0.95] tracking-tight"
             >
+              {/* One colour across both lines. The coral/white split read as
+                  two headings rather than one; coral survives as the per-letter
+                  hover, which is where it does more work anyway. */}
               <LetterLine
                 text="Frontend"
                 delay={0.15}
-                className="text-[clamp(3.2rem,10vw,7.5rem)] text-signal"
-                hoverClass="hover:text-ink"
+                className="text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
+                hoverClass="hover:text-signal"
               />
               <LetterLine
                 text="Engineer"
@@ -182,7 +185,7 @@ export function Hero() {
 
             <motion.p
               variants={item}
-              className="mt-7 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg"
+              className="mt-7 max-w-lg text-base leading-relaxed text-ink sm:text-lg"
             >
               Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. I build
               interfaces the way I test them — with real users, not just unit tests. Two years
@@ -200,7 +203,7 @@ export function Hero() {
               </Magnetic>
             </motion.div>
 
-            <motion.p variants={item} className="mt-5 flex items-center gap-2.5 text-sm text-ink-soft">
+            <motion.p variants={item} className="mt-5 flex items-center gap-2.5 text-sm text-ink">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
@@ -222,7 +225,7 @@ export function Hero() {
                   <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
                     <HeroStatValue value={s.value} delay={0.9 + i * 0.12} />
                   </span>
-                  <span className="mt-1 block text-xs text-ink-soft sm:text-sm">{s.label}</span>
+                  <span className="mt-1 block text-xs text-ink sm:text-sm">{s.label}</span>
                 </dd>
               </div>
             ))}

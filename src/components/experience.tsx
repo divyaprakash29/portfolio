@@ -110,7 +110,7 @@ export function Experience() {
                     {e.highlights.map((h) => (
                       <li
                         key={h.text}
-                        className="border-l border-line pl-4 text-sm leading-relaxed text-ink-soft sm:text-base"
+                        className="border-l border-line pl-4 text-sm leading-relaxed text-ink sm:text-base"
                       >
                         {h.text}
                         {h.stat && (

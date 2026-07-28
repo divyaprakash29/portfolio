@@ -9,8 +9,8 @@
   --canvas: #f5f8f9;
   --canvas-alt: #fdfefe;
   --ink: #131517;
-  --ink-soft: #4e5257;
-  --ink-faint: #5f6367;
+  --ink-soft: #3a3e42;
+  --ink-faint: #4e5257;
   --accent: #d8552f;
   --coral: #b23c1c;
   --line: #d9e1e5;
@@ -51,11 +51,14 @@
   --canvas: #0a1a20;
   --canvas-alt: #12262e;
   --ink: #ffffff;
-  --ink-soft: #b3b5b7;
-  /* Luma's own --gray-60 is #939597; nudged up ~10 levels because our wash
-     stays under the text all the way down the page and at their value the
-     mono captions measured 4.12:1 over the light end of the gradient. */
-  --ink-faint: #9ea0a2;
+  /* The whole ramp sits one step brighter than Luma's, because Luma's muted
+     greys sit inside cards on a dark base while ours sit directly on a wash
+     that lightens toward the bottom of the viewport. --ink-faint here is
+     Luma's --gray-content (their SECONDARY), and --ink-soft is brighter
+     still — prose is #fff via --ink, so these two only carry chrome:
+     nav links, chips, and small mono labels. */
+  --ink-soft: #d4d6d8;
+  --ink-faint: #b3b5b7;
   --accent: #f28763;
   --coral: #ffab8f;
   --line: #21383f;
