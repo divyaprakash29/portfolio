@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig, type Variants } from "framer-motion";
 import { profile, aboutViews } from "@/data/profile";
 import { Reveal } from "@/components/reveal";
 import { MaskedText } from "@/components/masked-text";
@@ -12,13 +12,16 @@ type Lens = keyof typeof aboutViews;
 
 const LENSES = Object.keys(aboutViews) as Lens[];
 
-const list = {
+// Annotated as Variants deliberately: without the contextual type, TS widens
+// `ease: [0.16, 0.84, 0.44, 1]` to number[], which Framer's Transition type
+// rejects (it wants the 4-tuple). Same reason hero.tsx annotates its variants.
+const list: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.045 } },
   exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
 };
 
-const row = {
+const row: Variants = {
   hidden: { opacity: 0, y: 8 },
   show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: [0.16, 0.84, 0.44, 1] } },
   exit: { opacity: 0, y: -6, transition: { duration: 0.15 } },
@@ -51,7 +54,7 @@ export function About() {
 
           {/* spec-sheet card */}
           <Reveal delay={0.15}>
-            <div className="rounded-sm border border-line bg-canvas-alt p-6 shadow-2 sm:p-7">
+            <div className="rounded-sm border border-line bg-[color-mix(in_srgb,var(--canvas-alt)_66%,transparent)] p-6 shadow-2 backdrop-blur-md sm:p-7">
               <div role="group" aria-label="View facts as" className="flex flex-wrap gap-2">
                 {LENSES.map((v) => (
                   <button

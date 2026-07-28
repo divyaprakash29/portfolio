@@ -89,11 +89,14 @@ export function ParticleField() {
     };
   }, [reduceMotion]);
 
+  // No negative z-index on the canvas: it would sink behind the fixed
+  // GrainField backdrop and disappear. Layering is DOM order instead — this
+  // renders before the hero content, which carries `relative z-10`.
   return (
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 text-ink-faint"
+      className="pointer-events-none absolute inset-0 text-ink-faint"
     />
   );
 }

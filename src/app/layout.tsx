@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/custom-cursor";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { Preloader } from "@/components/preloader";
+import { GrainField } from "@/components/grain-field";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />
+          <GrainField />
           <Preloader />
           <CustomCursor />
           {children}

@@ -1,5 +1,6 @@
 import { projects } from "@/data/profile";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 
 /**
  * Projects as an editorial index: numbered rows with a big serif name,
@@ -11,21 +12,26 @@ export function Projects() {
   return (
     <section id="projects" className="relative border-t border-line py-20 lg:py-28">
       <div className="mx-auto w-full max-w-content px-5 sm:px-8">
-        <Reveal>
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="font-mono text-2xl font-medium tracking-tight sm:text-3xl">
-              <span className="text-signal">{"//"}</span> projects
-            </h2>
-            <span className="font-mono text-sm text-ink-faint">{projects.length} shipped</span>
-          </div>
-        </Reveal>
+        <SectionHeading label="projects" aside={`${projects.length} shipped`} />
 
-        <ol className="mt-6 lg:mt-10">
+        {/* .projects-index dims the rows you aren't pointing at (CSS only, in
+            globals.css, and hover-capable pointers only) — the editorial-index
+            equivalent of pulling one card out of a stack. */}
+        <ol className="projects-index mt-6 lg:mt-10">
           {projects.map((p, i) => (
-            <li key={p.slug} className="group border-b border-line">
+            <li
+              key={p.slug}
+              data-cursor="view"
+              className="group relative border-b border-line transition-opacity duration-300"
+            >
+              {/* warm light bleeding in from the leading edge on hover */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_srgb,var(--accent)_11%,transparent),transparent_60%)] opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+              />
               <Reveal>
-                <div className="grid grid-cols-1 gap-x-10 gap-y-4 py-10 transition-transform duration-300 ease-out group-hover:translate-x-2 lg:grid-cols-[auto_1.1fr_1fr] lg:py-12">
-                  <span className="font-mono text-sm text-ink-faint lg:pt-3">
+                <div className="grid grid-cols-1 gap-x-10 gap-y-4 py-10 transition-transform duration-500 ease-out group-hover:translate-x-3 lg:grid-cols-[auto_1.1fr_1fr] lg:py-12">
+                  <span className="font-mono text-sm text-ink-faint transition-colors duration-300 group-hover:text-signal lg:pt-3">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
@@ -34,7 +40,7 @@ export function Projects() {
                       {p.tag}
                       <span
                         aria-hidden
-                        className="-translate-x-2 text-2xl opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+                        className="-translate-x-3 text-2xl opacity-0 transition-all duration-500 ease-out group-hover:translate-x-0 group-hover:opacity-100"
                       >
                         →
                       </span>

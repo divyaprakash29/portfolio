@@ -57,6 +57,11 @@ export function Experience() {
     offset: ["start 0.75", "end 0.45"],
   });
   const scaleY = useSpring(scrollYProgress, { stiffness: 90, damping: 26 });
+  // A glowing head rides the tip of the fill. `top` as a percentage of the
+  // track, not a translate — translateY percentages resolve against the dot's
+  // own 8px height, which would barely move it.
+  const headTop = useTransform(scaleY, (v) => `${v * 100}%`);
+  const headOpacity = useTransform(scaleY, [0, 0.03, 0.97, 1], [0, 1, 1, 0]);
 
   return (
     <section id="experience" className="relative border-t border-line py-20 lg:py-28">
@@ -64,27 +69,36 @@ export function Experience() {
         <SectionHeading label="work experience" />
 
         <div ref={railRef} className="relative mt-10 lg:mt-14">
-          {/* track + scroll-drawn fill */}
-          <div aria-hidden className="absolute bottom-3 left-[5px] top-3 w-px bg-line" />
-          <motion.div
-            aria-hidden
-            style={{ scaleY }}
-            className="absolute bottom-3 left-[5px] top-3 w-px origin-top bg-signal"
-          />
+          {/* track + scroll-drawn fill + the glowing head at its tip */}
+          <div aria-hidden className="absolute bottom-3 left-[5px] top-3 w-px bg-line">
+            <motion.div style={{ scaleY }} className="absolute inset-0 origin-top bg-signal" />
+            <motion.span
+              style={{ top: headTop, opacity: headOpacity }}
+              className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal shadow-[0_0_14px_3px_color-mix(in_srgb,var(--accent)_50%,transparent)]"
+            />
+          </div>
 
           <ol className="space-y-14 lg:space-y-16">
             {experience.map((e) => (
               <li key={e.company} className="relative pl-8 sm:pl-12">
                 <MotionConfig reducedMotion="user">
-                  {/* node ignites as the fill reaches it */}
-                  <motion.span
-                    aria-hidden
-                    initial={{ backgroundColor: "var(--canvas)", scale: 1 }}
-                    whileInView={{ backgroundColor: "var(--accent)", scale: 1.15 }}
-                    viewport={{ once: true, margin: "-30% 0px -30% 0px" }}
-                    transition={{ duration: 0.35 }}
-                    className="absolute left-0 top-[0.3rem] h-[11px] w-[11px] rounded-full border-2 border-signal"
-                  />
+                  {/* node ignites as the fill reaches it, and throws one ring */}
+                  <span aria-hidden className="absolute left-0 top-[0.3rem] h-[11px] w-[11px]">
+                    <motion.span
+                      initial={{ backgroundColor: "var(--canvas)", scale: 1 }}
+                      whileInView={{ backgroundColor: "var(--accent)", scale: 1.15 }}
+                      viewport={{ once: true, margin: "-30% 0px -30% 0px" }}
+                      transition={{ duration: 0.35 }}
+                      className="absolute inset-0 rounded-full border-2 border-signal"
+                    />
+                    <motion.span
+                      initial={{ opacity: 0, scale: 1 }}
+                      whileInView={{ opacity: [0, 0.45, 0], scale: [1, 3, 3.4] }}
+                      viewport={{ once: true, margin: "-30% 0px -30% 0px" }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      className="absolute inset-0 rounded-full bg-signal"
+                    />
+                  </span>
                 </MotionConfig>
                 <Reveal delay={0.05}>
                   <p className="font-mono text-xs tracking-widest text-ink-faint">{e.dates}</p>

@@ -143,6 +143,7 @@ export function Hero() {
       {/* vertical email rail */}
       <a
         href={`mailto:${profile.email}`}
+        data-cursor="mail"
         className="absolute left-4 top-1/2 hidden -translate-y-1/2 font-mono text-xs tracking-widest text-ink-faint transition-colors hover:text-signal lg:block"
         style={{ writingMode: "vertical-rl" }}
       >

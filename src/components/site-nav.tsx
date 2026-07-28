@@ -37,7 +37,9 @@ export function SiteNav() {
       className={cn(
         // color-mix instead of bg-canvas/85: the token is a plain CSS var,
         // which Tailwind's /alpha modifier can't generate rules for.
-        "sticky top-0 z-40 border-b border-transparent bg-[color-mix(in_srgb,var(--canvas)_85%,transparent)] backdrop-blur-md transition-shadow duration-300",
+        // 72%, not 85%: at 85% the bar reads as an opaque slab cutting across
+        // the ambient field. The blur keeps the text legible either way.
+        "sticky top-0 z-40 border-b border-transparent bg-[color-mix(in_srgb,var(--canvas)_72%,transparent)] backdrop-blur-md transition-shadow duration-300",
         scrolled && "border-line-strong shadow-2"
       )}
     >

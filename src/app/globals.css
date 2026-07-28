@@ -16,6 +16,20 @@
   --shadow-1: 0 1px 2px rgba(23, 27, 24, 0.06), 0 1px 1px rgba(23, 27, 24, 0.04);
   --shadow-2: 0 3px 10px rgba(23, 27, 24, 0.09), 0 1px 2px rgba(23, 27, 24, 0.06);
   --shadow-3: 0 14px 32px rgba(23, 27, 24, 0.12), 0 3px 8px rgba(23, 27, 24, 0.07);
+
+  /* Ambient field (see grain-field.tsx). Three colour pools drift behind the
+     whole page: the brand warm, a cool slate to keep it from going orange,
+     and a mauve to bridge them. Light theme runs them weaker — on a pale
+     canvas the same alpha reads as a stain rather than a wash. */
+  --wash-1: rgba(216, 85, 47, 0.16);
+  --wash-2: rgba(96, 132, 148, 0.17);
+  --wash-3: rgba(139, 111, 146, 0.13);
+  /* multiply, not overlay: overlay screens against any base lighter than 50%
+     luminance, so on the #eff2ed canvas the grey noise pushed towards white
+     and the grain vanished entirely. Multiply darkens it into view. */
+  --grain-blend: multiply;
+  --grain-opacity: 0.075;
+  --vignette: rgba(23, 27, 24, 0.14);
 }
 
 .dark {
@@ -32,6 +46,13 @@
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
   --shadow-3: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.045);
+
+  --wash-1: rgba(242, 135, 99, 0.14);
+  --wash-2: rgba(104, 148, 168, 0.14);
+  --wash-3: rgba(150, 118, 166, 0.1);
+  --grain-blend: overlay;
+  --grain-opacity: 0.07;
+  --vignette: rgba(0, 0, 0, 0.42);
 }
 
 * {
@@ -81,6 +102,95 @@ html.custom-cursor-active * {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Projects index: pointing at one row recedes the others. Gated on
+   (hover: hover) so a touch device — where :hover sticks after a tap — never
+   leaves the list dimmed. */
+@media (hover: hover) and (pointer: fine) {
+  .projects-index:hover > li:not(:hover) {
+    opacity: 0.45;
+  }
+}
+
+/* ─── Ambient field ────────────────────────────────────────────────────────
+   The drifting grain-gradient backdrop behind the entire page. Luma renders
+   the same effect with a three.js fragment shader; this is the DOM version —
+   three radial gradients on one transform-animated layer, a tiled SVG
+   fractal-noise grain over it, and a vignette. Everything animated here is a
+   transform on a composited layer, so it costs no paint per frame and no JS
+   at all: the whole thing is a server-rendered div with CSS.
+
+   Deliberately NOT filter: blur() on the wash — a blurred full-viewport layer
+   has to re-rasterise every frame it moves. Wide, low-alpha gradient stops
+   give the same softness for free. */
+.field-wash {
+  background:
+    radial-gradient(42% 38% at 16% 8%, var(--wash-1), transparent 72%),
+    radial-gradient(48% 42% at 88% 26%, var(--wash-2), transparent 74%),
+    radial-gradient(56% 48% at 42% 88%, var(--wash-3), transparent 76%);
+  animation: field-drift 46s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+
+/* Slow enough that you never catch it moving — you only notice the page
+   looked different a minute ago. The layer is inset -15%, so the scale and
+   translate never expose an edge. */
+@keyframes field-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(1.5%, 1.5%, 0) scale(1.1);
+  }
+}
+
+/* Film grain. The noise is one inline feTurbulence tile (≈300 bytes, no
+   network request) desaturated to grey and blended with overlay so it darkens
+   the lights and lifts the darks rather than fogging everything grey. */
+.field-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  animation: field-grain 6s steps(1, end) infinite;
+  will-change: transform;
+}
+
+/* steps(1, end) holds each offset then jumps to the next — the grain
+   resettles about every 0.75s instead of sliding, which is what reads as
+   film rather than as a moving texture. */
+@keyframes field-grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  12.5% {
+    transform: translate(-1%, -1.5%);
+  }
+  25% {
+    transform: translate(1.5%, -1%);
+  }
+  37.5% {
+    transform: translate(-1.5%, 1%);
+  }
+  50% {
+    transform: translate(1%, 1.5%);
+  }
+  62.5% {
+    transform: translate(-1%, -1%);
+  }
+  75% {
+    transform: translate(1.5%, 1%);
+  }
+  87.5% {
+    transform: translate(-1.5%, -1%);
+  }
+}
+
+.field-vignette {
+  background: radial-gradient(115% 85% at 50% 40%, transparent 45%, var(--vignette) 100%);
 }
 
 /* Preloader entrance — pure CSS so the name paints before React hydrates
