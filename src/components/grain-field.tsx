@@ -8,10 +8,15 @@
  * `"use client"`, zero JS shipped, and it paints with the first HTML rather
  * than after hydration.
  *
- * `bg-canvas` on the container is load-bearing, not redundant with `body`:
- * `mix-blend-mode` on the grain only blends against backdrops inside this
- * stacking context, so without an opaque base here the grain would composite
- * against transparency and lose most of its effect.
+ * The gradient stops and grain amplitude are sampled from background.png (the
+ * reference crop) rather than eyeballed — see the `.field-*` comments for what
+ * the measurements were and where we deliberately depart from them.
+ *
+ * `bg-canvas` on the container is the base the grain's `mix-blend-mode`
+ * composites against: blending only sees backdrops inside this stacking
+ * context, so without an opaque layer here the grain would composite against
+ * transparency and lose most of its effect. The wash covers it in practice,
+ * but it keeps the grain correct if the wash ever goes translucent again.
  */
 export function GrainField() {
   return (

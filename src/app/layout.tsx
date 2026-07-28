@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Instrument_Sans, Playfair_Display } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/custom-cursor";
@@ -14,17 +14,27 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const instrumentSans = Instrument_Sans({
+// Inter is the body face Luma actually falls back to. Variable font — no
+// weight array, same rule as the display face below (see CLAUDE.md).
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-instrument-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
-// Playfair Display is a variable font (400–900 axis) — no weight array,
-// same rule as Instrument Sans (see CLAUDE.md).
-const playfair = Playfair_Display({
+// Fraunces replaces Playfair Display: the closest free stand-in for New
+// Spirit, the Adobe Fonts serif Luma uses and which we can't license here.
+//
+// `axes` is not optional decoration. Fraunces ships an optical-size axis, and
+// Next subsets a variable font down to the wght axis unless the others are
+// asked for by name — without `opsz` the glyphs stay at their small-text
+// design (chunky, tight) at 7rem, which is exactly the size we use it at.
+// SOFT rounds the terminals; that softness is most of what makes it read like
+// New Spirit rather than like another Playfair.
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  axes: ["SOFT", "opsz"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -42,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plexMono.variable} ${instrumentSans.variable} ${playfair.variable} font-sans antialiased bg-canvas text-ink`}
+        className={`${plexMono.variable} ${inter.variable} ${fraunces.variable} font-sans antialiased bg-canvas text-ink`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />

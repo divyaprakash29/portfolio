@@ -2,10 +2,13 @@ import { cn } from "@/lib/cn";
 
 /**
  * One-time light sweep across the hero — adapted from the 21st.dev
- * catalog ("Spotlight" by manuarora700). A blurred ellipse tinted with
- * the accent token fades and glides in once on load (CSS keyframes in
- * globals.css), then holds. Dark theme only: a light beam has no
- * contrast to work with on the light canvas.
+ * catalog ("Spotlight" by manuarora700). A blurred ellipse fades and glides in
+ * once on load (CSS keyframes in globals.css), then holds. Dark theme only: a
+ * light beam has no contrast to work with on the light canvas.
+ *
+ * Filled with --ink, not --accent. Coral at 16% over the teal wash mixed to a
+ * brown smudge sitting on an otherwise clean gradient; this is a light source,
+ * so it wants near-white and a lower opacity.
  */
 export function Spotlight({ className }: { className?: string }) {
   return (
@@ -26,8 +29,8 @@ export function Spotlight({ className }: { className?: string }) {
           rx="1924.71"
           ry="273.501"
           transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-          style={{ fill: "var(--accent)" }}
-          fillOpacity="0.16"
+          style={{ fill: "var(--ink)" }}
+          fillOpacity="0.09"
         />
       </g>
       <defs>

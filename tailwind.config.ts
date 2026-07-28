@@ -22,8 +22,8 @@ const config: Config = {
       },
       fontFamily: {
         mono: ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
-        sans: ["var(--font-instrument-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
       },
       boxShadow: {
         1: "var(--shadow-1)",

@@ -48,12 +48,17 @@ npm run lint
 
 ## Gotchas already hit once — don't re-hit them
 
-- **Instrument Sans must not get an explicit `weight` array** in
-  `next/font/google`. It's a variable font on Google Fonts; passing
-  `weight: ["400","500","600","700"]` forces Next to download 4 separate
-  static instances instead of the one variable file. Leave `weight` unset.
-  (IBM Plex Mono has no variable axis, so its weight array is correct and
-  necessary — don't "fix" that one.)
+- **Variable fonts must not get an explicit `weight` array** in
+  `next/font/google`. Inter and Fraunces (the current body and display faces)
+  are both variable; passing `weight: ["400","500","600","700"]` forces Next to
+  download 4 separate static instances instead of the one variable file. Leave
+  `weight` unset. (IBM Plex Mono has no variable axis, so its weight array is
+  correct and necessary — don't "fix" that one.)
+- **A variable font's non-weight axes need naming in `axes`, or Next drops
+  them.** Fraunces ships `opsz` and `SOFT`; without `axes: ["SOFT", "opsz"]`
+  Next subsets to the wght axis alone and the display type silently renders at
+  its small-text design — chunkier and tighter — at 7rem. No error, just wrong
+  letterforms.
 - **Every interactive element needs a ≥44×44px hit target.** Checked via an
   actual DOM audit script (bounding rects), not eyeballing — see `SKILLS.md`
   for the QC method. The nav links and theme toggle both failed this once.
@@ -72,11 +77,28 @@ npm run lint
   fully spec'd + approved R3F "cinematic scroll" intro (4-act scroll-driven
   scene, 5 of 7 tasks built and verified) was rolled back mid-build — the
   user didn't like the scroll-hijacking feel. The site's direction is a
-  Tajmirul-style elegant DOM hero — dark #212121, coral accent (#f28763
-  dark / #d8552f light, token `--accent`), Playfair Display for display
-  type in mixed case, a ~1.9s "DIVYA PRAKASH" preloader. The user explicitly
+  Tajmirul-style elegant DOM hero — coral accent (#f28763 dark / #d8552f
+  light, token `--accent`), Fraunces for display type in mixed case, Inter
+  for body, a ~1.9s "DIVYA PRAKASH" preloader. The user explicitly
   rejected green accents. Scroll animations may come later, but keep them
   light and DOM-based (Framer Motion / GSAP), not a WebGL scene.
+- **The palette is teal-slate, not the old flat #212121** (changed
+  2026-07-28 at the user's request, referencing Luma's event-page
+  background — `background.png` in the repo root is the reference crop).
+  Dark canvas `#0a1a20`; the page sits on a fixed near-vertical gradient
+  `#071619 → #1a3340 → #2b4356` with a film-grain overlay
+  (`grain-field.tsx` + the `.field-*` rules). Type is pure white on a
+  neutral grey ramp — Luma's own values. Luma paints that background with a
+  three.js shader; ours is CSS, and it should stay that way.
+- **Changing the wash costs contrast.** The gradient's light end sits under
+  text for the whole page, so lightening `--wash-bot` pushes the mono
+  captions (`--ink-faint`) and the accent stat text toward failing AA.
+  Measure it — `contrast-check.js` in the scratch dir screenshots the field
+  with content hidden, samples the gradient at five viewport heights, and
+  prints ratios per token. Known outstanding issue: light-theme `--accent`
+  on small text is ~3.2–3.7:1, under the 4.5 needed for normal text. It was
+  already failing before the retheme; fixing it means darkening the brand
+  coral, which is the user's call.
 - **`useReducedMotion()` is `false` on the first render.** Framer's hook only
   flips after mount, so anything gated on it will *mount and then animate away*
   — which is precisely what a reduced-motion user asked not to see. For

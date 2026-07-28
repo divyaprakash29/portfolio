@@ -2,57 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cool teal-slate greys, not the warm sage this started as. The ramp is
+   tinted to sit on the ambient wash below rather than fight it; the warmth on
+   the page is the coral accent's job alone. */
 :root {
-  --canvas: #eff2ed;
-  --canvas-alt: #f8f9f5;
-  --ink: #171b18;
-  --ink-soft: #565f58;
-  --ink-faint: #8b927e;
+  --canvas: #f5f8f9;
+  --canvas-alt: #fdfefe;
+  --ink: #131517;
+  --ink-soft: #4e5257;
+  --ink-faint: #5f6367;
   --accent: #d8552f;
   --coral: #b23c1c;
-  --line: #c7ccc1;
-  --line-strong: #a9af9d;
+  --line: #d9e1e5;
+  --line-strong: #b8c5cc;
 
-  --shadow-1: 0 1px 2px rgba(23, 27, 24, 0.06), 0 1px 1px rgba(23, 27, 24, 0.04);
-  --shadow-2: 0 3px 10px rgba(23, 27, 24, 0.09), 0 1px 2px rgba(23, 27, 24, 0.06);
-  --shadow-3: 0 14px 32px rgba(23, 27, 24, 0.12), 0 3px 8px rgba(23, 27, 24, 0.07);
+  --shadow-1: 0 1px 2px rgba(13, 26, 31, 0.06), 0 1px 1px rgba(13, 26, 31, 0.04);
+  --shadow-2: 0 3px 10px rgba(13, 26, 31, 0.09), 0 1px 2px rgba(13, 26, 31, 0.06);
+  --shadow-3: 0 14px 32px rgba(13, 26, 31, 0.12), 0 3px 8px rgba(13, 26, 31, 0.07);
 
-  /* Ambient field (see grain-field.tsx). Three colour pools drift behind the
-     whole page: the brand warm, a cool slate to keep it from going orange,
-     and a mauve to bridge them. Light theme runs them weaker — on a pale
-     canvas the same alpha reads as a stain rather than a wash. */
-  --wash-1: rgba(216, 85, 47, 0.16);
-  --wash-2: rgba(96, 132, 148, 0.17);
-  --wash-3: rgba(139, 111, 146, 0.13);
+  /* Ambient field (see grain-field.tsx). The light-theme counterpart of the
+     dark gradient: same near-vertical sweep, pale end of the same hue. */
+  --wash-top: #fdfefe;
+  --wash-mid: #f0f4f7;
+  /* Not as dark as the dark theme's sweep is light. The accent is fixed brand
+     coral, and every level the bottom of the gradient loses costs contrast on
+     the small mono stat text that uses it. */
+  --wash-bot: #e6ecf1;
   /* multiply, not overlay: overlay screens against any base lighter than 50%
-     luminance, so on the #eff2ed canvas the grey noise pushed towards white
-     and the grain vanished entirely. Multiply darkens it into view. */
+     luminance, so on a pale canvas the grey noise pushed towards white and the
+     grain vanished entirely. Multiply darkens it into view. */
   --grain-blend: multiply;
-  --grain-opacity: 0.075;
-  --vignette: rgba(23, 27, 24, 0.14);
+  --grain-opacity: 0.1;
+  --vignette: rgba(13, 26, 31, 0.07);
 }
 
+/* Sampled off background.png: the reference gradient runs #081a1f at the top
+   through #243f4f to #3a4f64 at the bottom — deep teal into blue slate.
+   --wash-bot is pulled back from the measured #3a4f64 to #2b4356 on purpose:
+   the reference is a phone screenshot whose light end sits below the content,
+   whereas ours is fixed to the viewport and always has text over it, and at
+   the true value secondary type dropped to ~2.5:1.
+
+   The ink ramp is Luma's own: pure white primary and a NEUTRAL grey ramp
+   (their --primary-color / --gray-50 / --gray-60). Tinting these teal to
+   "harmonise" with the wash was wrong — against a coloured background the
+   neutral greys are what read as clean; tinted ones just look faded. */
 .dark {
-  --canvas: #212121;
-  --canvas-alt: #282828;
-  --ink: #dedede;
-  --ink-soft: #a3a3a3;
-  --ink-faint: #6f6f6f;
+  --canvas: #0a1a20;
+  --canvas-alt: #12262e;
+  --ink: #ffffff;
+  --ink-soft: #b3b5b7;
+  /* Luma's own --gray-60 is #939597; nudged up ~10 levels because our wash
+     stays under the text all the way down the page and at their value the
+     mono captions measured 4.12:1 over the light end of the gradient. */
+  --ink-faint: #9ea0a2;
   --accent: #f28763;
   --coral: #ffab8f;
-  --line: #373737;
-  --line-strong: #4a4a4a;
+  --line: #21383f;
+  --line-strong: #2f4c56;
 
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
   --shadow-3: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.045);
 
-  --wash-1: rgba(242, 135, 99, 0.14);
-  --wash-2: rgba(104, 148, 168, 0.14);
-  --wash-3: rgba(150, 118, 166, 0.1);
+  --wash-top: #071619;
+  --wash-mid: #1a3340;
+  --wash-bot: #2b4356;
   --grain-blend: overlay;
-  --grain-opacity: 0.07;
-  --vignette: rgba(0, 0, 0, 0.42);
+  --grain-opacity: 0.16;
+  --vignette: rgba(0, 0, 0, 0.16);
 }
 
 * {
@@ -121,37 +139,50 @@ html.custom-cursor-active * {
    transform on a composited layer, so it costs no paint per frame and no JS
    at all: the whole thing is a server-rendered div with CSS.
 
-   Deliberately NOT filter: blur() on the wash — a blurred full-viewport layer
-   has to re-rasterise every frame it moves. Wide, low-alpha gradient stops
-   give the same softness for free. */
+   One near-vertical gradient, not the corner blobs this started as: sampling
+   background.png row by row showed a clean top-to-bottom sweep with only ~11
+   levels of horizontal variation across 330px, so 172deg rather than 180deg
+   captures the slight lean without inventing a diagonal that isn't there.
+
+   Opaque, not translucent. Layering alpha stops over a neutral canvas can't
+   reach these values without going muddy, and the wash is the bottom layer
+   anyway — nothing needs to show through it. */
 .field-wash {
-  background:
-    radial-gradient(42% 38% at 16% 8%, var(--wash-1), transparent 72%),
-    radial-gradient(48% 42% at 88% 26%, var(--wash-2), transparent 74%),
-    radial-gradient(56% 48% at 42% 88%, var(--wash-3), transparent 76%);
+  background: linear-gradient(
+    172deg,
+    var(--wash-top) 0%,
+    var(--wash-mid) 55%,
+    var(--wash-bot) 100%
+  );
   animation: field-drift 46s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
   will-change: transform;
 }
 
-/* Slow enough that you never catch it moving — you only notice the page
-   looked different a minute ago. The layer is inset -15%, so the scale and
-   translate never expose an edge. */
+/* Slow enough that you never catch it moving — you only notice the page looked
+   different a minute ago. Small amplitude on purpose: the layer is inset -15%
+   so an edge can never show, but a vertical gradient shifted vertically just
+   slides its stops, and past a couple of percent that reads as the page
+   brightening rather than as drift. */
 @keyframes field-drift {
   0% {
-    transform: translate3d(-1.5%, -1%, 0) scale(1.04);
+    transform: translate3d(-1%, -0.5%, 0) scale(1.03);
   }
   100% {
-    transform: translate3d(1.5%, 1.5%, 0) scale(1.1);
+    transform: translate3d(1%, 1%, 0) scale(1.07);
   }
 }
 
 /* Film grain. The noise is one inline feTurbulence tile (≈300 bytes, no
    network request) desaturated to grey and blended with overlay so it darkens
-   the lights and lifts the darks rather than fogging everything grey. */
+   the lights and lifts the darks rather than fogging everything grey.
+   baseFrequency 0.95 over a 160px tile rather than 0.82 over 200px: measuring
+   background.png gave a mean deviation of 8–10 luma levels with 13–18% of
+   pixels reading as distinct bright speckle, which is coarse, sparkly grain —
+   the earlier settings were roughly a third of that and read as a faint fog. */
 .field-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 200px 200px;
+  background-size: 160px 160px;
   opacity: var(--grain-opacity);
   mix-blend-mode: var(--grain-blend);
   animation: field-grain 6s steps(1, end) infinite;

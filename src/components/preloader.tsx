@@ -80,7 +80,7 @@ export function Preloader() {
           <motion.div
             id="preloader"
             key="preloader"
-            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#0f0f0f] motion-reduce:hidden"
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#061317] motion-reduce:hidden"
             variants={curtain}
             exit="exit"
             aria-hidden="true"
@@ -90,10 +90,11 @@ export function Preloader() {
                   stagger from behind it. The name is all-caps so there are no
                   descenders to clear — the mask sits tight to the baseline. */}
               <div className="overflow-hidden px-4 pb-[0.06em] -mb-[0.06em]">
-                {/* Bone rather than a neutral white: #ededed is a *cool*
-                    grey-white and the rule below it is warm coral, so the two
-                    read as slightly out of temperature with each other. */}
-                <h2 className="pl-name flex justify-center font-display font-medium text-[clamp(2rem,6.5vw,6.5rem)] leading-none text-[#f4efe6]">
+                {/* Pure white, matching --ink. This was a warm bone (#f4efe6)
+                    to sit closer in temperature to the coral rule, but the
+                    curtain now hands off to a page whose type is #fff — and a
+                    bone-to-white shift on the lift read as a colour pop. */}
+                <h2 className="pl-name flex justify-center font-display font-medium text-[clamp(2rem,6.5vw,6.5rem)] leading-none text-white">
                   {NAME.split("").map((char, i) => (
                     <span
                       key={i}
