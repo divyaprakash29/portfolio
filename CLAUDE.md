@@ -93,8 +93,8 @@ npm run lint
 - **A CSS keyframe that animates `transform` silently kills Tailwind's
   transform utilities on the same element.** They're the same property, so
   `animate-[spin]` + `-translate-y-1/2` drops the element half a viewport with
-  no error. Hit on the hero starburst; fixed by positioning with `top` instead.
-  Wrap in a positioning parent if you need both.
+  no error. Position with `top`/`left` instead, or wrap in a positioning parent
+  and animate the child.
 - **Changing the wash costs contrast.** The gradient's light end sits under
   text for the whole page, so lightening `--wash-bot` pushes the mono
   captions (`--ink-faint`) and the accent stat text toward failing AA.
