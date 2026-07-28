@@ -39,6 +39,9 @@
   --grain-blend: multiply;
   --grain-opacity: 0.1;
   --vignette: rgba(13, 26, 31, 0.07);
+  /* Hero starburst. Navy in the reference; on a pale canvas a true navy shape
+     reads as a heavy blot, so light theme takes the same hue at low alpha. */
+  --burst: rgba(30, 52, 92, 0.07);
 }
 
 /* Sampled off background.png: the reference gradient runs #081a1f at the top
@@ -82,6 +85,10 @@
   --grain-blend: overlay;
   --grain-opacity: 0.16;
   --vignette: rgba(0, 0, 0, 0.16);
+  /* Navy, and LIGHTER than the wash it sits on rather than darker — the top of
+     the gradient is #071619, so a navy that reads as navy has to come up out
+     of it, not sink into it. */
+  --burst: rgba(26, 46, 84, 0.55);
 }
 
 * {
@@ -228,6 +235,23 @@ html.custom-cursor-active * {
   }
   87.5% {
     transform: translate(-1.5%, -1%);
+  }
+}
+
+/* The burst turns very slowly. At 200s a full revolution is ~0.0005 deg/frame
+   — you cannot perceive it moving, only that it isn't where it was. Faster
+   reads as a spinning graphic, which is exactly the tacky version of this.
+   `blur` softens the spike tips so it sits in the background rather than
+   cutting across it; the reduced-motion block above freezes the rotation. */
+.field-burst {
+  filter: blur(2px);
+  animation: field-burst 200s linear infinite;
+  will-change: transform;
+}
+
+@keyframes field-burst {
+  to {
+    transform: rotate(360deg);
   }
 }
 

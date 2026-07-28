@@ -16,6 +16,7 @@ import { cn } from "@/lib/cn";
 import { Magnetic } from "@/components/magnetic";
 import { ParticleField } from "@/components/particle-field";
 import { Spotlight } from "@/components/spotlight";
+import { Starburst } from "@/components/starburst";
 
 const container: Variants = {
   hidden: {},
@@ -129,6 +130,11 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[calc(100svh-4.25rem)] items-center overflow-hidden py-16"
     >
+      {/* Poster burst, in the empty right half. No -translate-y-1/2 to centre
+          it: the rotation keyframe writes `transform`, which would clobber the
+          translate and drop the shape half a viewport. Offset with `top`. */}
+      <Starburst className="-top-1/4 right-[-18%] h-[150%] w-[80%] sm:w-[62%]" />
+
       <motion.div
         aria-hidden
         style={{ y: reduceMotion ? 0 : particlesY }}

@@ -90,6 +90,11 @@ npm run lint
   (`grain-field.tsx` + the `.field-*` rules). Type is pure white on a
   neutral grey ramp — Luma's own values. Luma paints that background with a
   three.js shader; ours is CSS, and it should stay that way.
+- **A CSS keyframe that animates `transform` silently kills Tailwind's
+  transform utilities on the same element.** They're the same property, so
+  `animate-[spin]` + `-translate-y-1/2` drops the element half a viewport with
+  no error. Hit on the hero starburst; fixed by positioning with `top` instead.
+  Wrap in a positioning parent if you need both.
 - **Changing the wash costs contrast.** The gradient's light end sits under
   text for the whole page, so lightening `--wash-bot` pushes the mono
   captions (`--ink-faint`) and the accent stat text toward failing AA.
