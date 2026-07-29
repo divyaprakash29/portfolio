@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- A single D filling the tile. The first pass framed it in the nav's `<DP />`
+       angle brackets, which looked right at 128px and turned to mush at 16px —
+       the size that actually matters — while squeezing the letter down to
+       nothing. A favicon has one job at one size, so the mark fills the canvas.
+
+       Letterforms are paths, not <text>: a favicon renders on the viewer's
+       machine, so a font-family reference would fall back to whatever they
+       happen to have installed. -->
+  <rect width="32" height="32" rx="7" fill="#0a1a20"/>
+  <path fill="#ffffff" fill-rule="evenodd"
+        d="M7 5h8a11 11 0 0 1 0 22H7zm5 4.6v12.8h3a6.4 6.4 0 0 0 0-12.8z"/>
+</svg>
