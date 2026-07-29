@@ -7,13 +7,13 @@ export const profile = {
   github: "https://github.com/divyaprakash29",
   linkedin: "https://linkedin.com/in/divya-prakash29/",
   lede:
-    "I build interfaces the way I test them — with real users, not just unit tests. Two years shipping production React at Prodapt Solutions, now sharpening the design side of that equation at Northeastern.",
+    "I build interfaces the way I test them — with real users, not just unit tests. Three years shipping production React at Prodapt Solutions, now sharpening the design side of that equation at Northeastern.",
 };
 
-// Drawn from real résumé facts — 2 yrs at Prodapt, 4 featured projects,
+// Drawn from real résumé facts — 3 yrs at Prodapt, 4 featured projects,
 // and the measured perf win from the code-splitting work. Don't inflate these.
 export const stats = [
-  { value: "2+", label: "Years of Experience" },
+  { value: "3+", label: "Years of Experience" },
   { value: "4", label: "Projects Shipped" },
   { value: "35%", label: "Faster Load Times" },
 ];
@@ -26,7 +26,7 @@ export const experience = [
     company: "Prodapt Solutions",
     location: "India",
     title: "Software Engineer",
-    dates: "Oct 2021 – Aug 2023",
+    dates: "Oct 2021 – Aug 2024",
     highlights: [
       {
         text: "Built responsive web applications with JavaScript, Next.js, Tailwind CSS, and Material UI across telecom customer platforms.",

@@ -182,7 +182,7 @@ export function Hero() {
               className="mt-7 max-w-lg text-base leading-relaxed text-ink sm:text-lg"
             >
               Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. I build
-              interfaces the way I test them — with real users, not just unit tests. Two years
+              interfaces the way I test them — with real users, not just unit tests. Three years
               shipping production React, now sharpening the design side at Northeastern.
             </motion.p>
 
