@@ -111,7 +111,7 @@ export const projects = [
       "Infrastructure as code from day one — a single Terraform apply stands up the VPC and RDS instance, and GitHub Actions deploys on every push to main.",
     stack: ["Python", "FastAPI", "AWS", "Terraform", "CI/CD"],
     stat: null,
-    href: "https://github.com/divyaprakash29/webapp",
+    href: "https://github.com/CSYE6225-DivyaPrakash/webapp",
   },
 ];
 
