@@ -35,3 +35,19 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 *.pdf
+# ...except the published CV. Same path the previous deployment served, so any
+# external link to /CV.pdf keeps resolving.
+!public/CV.pdf
+
+# AI / assistant tooling — local dev config, not part of the project
+.claude/
+.cursor/
+.aider*
+.continue/
+.windsurf/
+.github/copilot-instructions.md
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.mcp.json
+docs/superpowers/

@@ -14,7 +14,6 @@ import {
 import { profile, stats } from "@/data/profile";
 import { cn } from "@/lib/cn";
 import { Magnetic } from "@/components/magnetic";
-import { ParticleField } from "@/components/particle-field";
 import { Spotlight } from "@/components/spotlight";
 
 const container: Variants = {
@@ -120,7 +119,6 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
   const headlineY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const particlesY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const statsY = useTransform(scrollYProgress, [0, 1], [0, 45]);
 
   return (
@@ -129,15 +127,11 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[calc(100svh-4.25rem)] items-center overflow-hidden py-16"
     >
-      <motion.div
-        aria-hidden
-        style={{ y: reduceMotion ? 0 : particlesY }}
-        className="absolute inset-0"
-      >
-        <ParticleField />
-      </motion.div>
+      {/* The hero's own ParticleField was removed when the page-wide
+          WaterShimmer landed — two dot fields over each other read as noise,
+          and the shimmer already covers the hero. */}
 
-      {/* coral light sweep, once, after the preloader lifts (dark only) */}
+      {/* light sweep, once, after the preloader lifts (dark only) */}
       <Spotlight className="-top-40 left-0 hidden md:-top-20 md:left-40 dark:block" />
 
       {/* vertical email rail */}
@@ -164,7 +158,7 @@ export function Hero() {
             <motion.h1
               aria-label="Frontend Engineer"
               style={{ y: reduceMotion ? 0 : headlineY }}
-              className="font-display font-medium leading-[0.95] tracking-tight"
+              className="font-display leading-[0.95] tracking-tight"
             >
               {/* One colour across both lines. The coral/white split read as
                   two headings rather than one; coral survives as the per-letter
@@ -222,7 +216,7 @@ export function Hero() {
               <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
-                  <span className="block font-display text-4xl font-semibold text-signal sm:text-5xl">
+                  <span className="block font-display text-4xl text-signal sm:text-5xl">
                     <HeroStatValue value={s.value} delay={0.9 + i * 0.12} />
                   </span>
                   <span className="mt-1 block text-xs text-ink sm:text-sm">{s.label}</span>

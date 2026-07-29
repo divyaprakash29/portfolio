@@ -16,7 +16,7 @@ export function Contact() {
         <SectionHeading label="contact" />
 
         <Reveal delay={0.08}>
-          <p className="mt-10 max-w-3xl font-display text-4xl font-medium leading-tight text-ink sm:text-5xl lg:mt-14 lg:text-6xl">
+          <p className="mt-10 max-w-3xl font-display text-4xl leading-tight text-ink sm:text-5xl lg:mt-14 lg:text-6xl">
             <MaskedText
               text="Let's build something people actually use."
               accentWords={["actually"]}
@@ -40,6 +40,9 @@ export function Contact() {
               {[
                 { label: "github", href: profile.github },
                 { label: "linkedin", href: profile.linkedin },
+                // Same path the previous deployment served, so external links
+                // to /CV.pdf still resolve.
+                { label: "résumé", href: "/CV.pdf" },
               ].map((s) => (
                 <li key={s.label}>
                   <Magnetic strength={0.25}>

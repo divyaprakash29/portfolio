@@ -11,13 +11,20 @@
   --ink: #131517;
   --ink-soft: #3a3e42;
   --ink-faint: #4e5257;
-  /* More saturated but DEEPER than the #d8552f it replaces, not brighter.
-     On a near-white canvas the old value was never muddy — it was failing
-     contrast (3.17:1 on the 14px mono stat text, under the 4.5 AA wants). Any
-     lighter and that gets worse, so the brief "more saturated, less grey"
-     is delivered by dropping the salmon and raising chroma instead. 4.83:1. */
-  --accent: #b33608;
-  --coral: #8c2b08;
+  /* Dark's amber can't be reused: yellow on a near-white canvas is the classic
+     contrast failure, and #fde68a manages about 1.2:1 here. Same warm family
+     taken right down to a bronze, which is the only way a gold accent clears
+     AA on small text against a pale background. 4.70:1.
+
+     Deliberately bronze rather than the darker olive-gold that also passes —
+     olive reads as green-adjacent, and green accents are rejected. */
+  /* Monochrome. The accent is the ink colour itself — inverted per theme, so
+     "white" here means the near-black that plays the same role against a pale
+     canvas. Nothing on the page signals by hue any more; all the colour lives
+     in the background wash, and emphasis has to come from weight, size and
+     placement instead. */
+  --accent: #131517;
+  --accent-soft: #3a3e42;
   --line: #d9e1e5;
   --line-strong: #b8c5cc;
 
@@ -39,6 +46,19 @@
   --grain-blend: multiply;
   --grain-opacity: 0.1;
   --vignette: rgba(13, 26, 31, 0.07);
+  /* Multiply on a pale canvas only ever darkens, and that is not free: at 0.5
+     the weave pulled the background from rgb(225,230,233) to rgb(207,212,216)
+     and dropped the bronze accent on small text to 3.97:1, under AA. 0.28 is
+     the most weave this theme can carry and stay legible. */
+  --paper-opacity: 0.28;
+  /* Starts dark even in the light theme: the preloader curtain is dark in
+     both, so resolving out of dark reads as the lights coming up rather than
+     as a mismatch. Lifted off black so the light page doesn't arrive as a
+     hard flash. */
+  --reveal-from: #12181c;
+  /* White, not a dark: breathing toward white moves AWAY from the near-black
+     text, so contrast only improves. */
+  --breathe-color: #ffffff;
 }
 
 /* Sampled off background.png: the reference gradient runs #081a1f at the top
@@ -64,11 +84,11 @@
      nav links, chips, and small mono labels. */
   --ink-soft: #d4d6d8;
   --ink-faint: #b3b5b7;
-  /* #f28763 was a desaturated salmon, which is why it went muddy against the
-     teal wash — low-chroma warm over cool mixes toward brown. Same hue family,
-     chroma pushed up and lightness with it. */
-  --accent: #ff7a4d;
-  --coral: #ffa07a;
+  /* Pure white — deliberately identical to --ink. The grey attempt sat between
+     --ink-soft and --ink-faint and read as dimmer text rather than as an
+     accent; matching --ink exactly is the honest version of the same idea. */
+  --accent: #ffffff;
+  --accent-soft: #d4d6d8;
   --line: #21383f;
   --line-strong: #2f4c56;
 
@@ -82,6 +102,9 @@
   --grain-blend: overlay;
   --grain-opacity: 0.16;
   --vignette: rgba(0, 0, 0, 0.16);
+  --paper-opacity: 0.38;
+  --reveal-from: #04090b;
+  --breathe-color: #02070a;
 }
 
 * {
@@ -228,6 +251,103 @@ html.custom-cursor-active * {
   }
   87.5% {
     transform: translate(-1.5%, -1%);
+  }
+}
+
+/* Canvas weave. Three feTurbulence passes in one tile, which is what separates
+   woven cloth from plain noise:
+
+   - warp  — baseFrequency '0.9 0.03': fast variation across x, slow down y,
+             so the noise smears into long vertical threads.
+   - weft  — '0.03 0.9', the same trick on the other axis: horizontal threads.
+             Crossing the two is the weave; either one alone just looks brushed.
+   - mottle— '0.012' isotropic, large soft blotches. Real canvas isn't uniform;
+             without this the weave reads as a synthetic screen pattern.
+
+   stitchTiles='stitch' is what makes the 240px tile seamless — drop it and
+   every repeat boundary shows as a hairline. Static: no animation, because a
+   surface texture that moves stops reading as the surface. */
+.field-paper {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='warp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.03' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cfilter id='weft'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cfilter id='mottle'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23mottle)' opacity='0.55'/%3E%3Crect width='240' height='240' filter='url(%23warp)' opacity='0.5'/%3E%3Crect width='240' height='240' filter='url(%23weft)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 240px 240px;
+  opacity: var(--paper-opacity);
+  mix-blend-mode: var(--grain-blend);
+}
+
+/* Entrance: the whole backdrop resolves out of darkness once the preloader
+   curtain has lifted, so the page "comes up" rather than snapping on.
+
+   An opaque layer fading out, NOT an animation on the gradient's own colour
+   stops. Interpolating those would need @property to register them as <color>,
+   and it would repaint a full-viewport gradient every frame; this is one
+   opacity on a composited layer, which the compositor handles without paint.
+
+   The delay must clear the preloader ENTIRELY: the curtain holds 1.3s then
+   lifts over 0.62s, so nothing below it is visible until 1.92s. An earlier
+   1.25s delay looked right on paper and was wrong — sampling the painted
+   pixels through a load showed the reveal already down to 0.12 opacity by the
+   time the curtain was out of the way, so 88% of it played behind an opaque
+   panel and only the last scrap was ever seen.
+
+   `both` holds it opaque through the delay — without that it would flash the
+   finished page first. The global reduced-motion block collapses it. */
+.field-reveal {
+  background: var(--reveal-from);
+  animation: field-reveal 1.4s cubic-bezier(0.33, 0, 0.2, 1) 1.95s both;
+}
+
+@keyframes field-reveal {
+  to {
+    opacity: 0;
+  }
+}
+
+/* The continuous version: the backdrop breathes darker and back, forever.
+   Separate layer from .field-reveal rather than one element doing both,
+   because CSS can't chain a one-shot into an infinite loop on the same
+   property — and keeping them apart means each can be verified on its own.
+   The delay picks up exactly where the reveal ends (1.95 + 1.4).
+
+   The DIRECTION is per-theme, and that is a contrast decision, not taste.
+   Dark theme breathes toward black; light theme breathes toward white. Both
+   move away from their own text colour, so the measured AA ratios are the
+   worst case and the loop can only improve them. Breathing dark on the light
+   theme would have pushed the bronze accent — already the tightest at 4.71:1
+   — under the line twice a minute.
+
+   `backwards` holds opacity 0 through the delay; without it the layer sits at
+   full opacity and blacks the page out until the animation starts. */
+.field-breathe {
+  /* Anchored at the top-left corner and falling off to nothing by ~72%, so at
+     any instant the corner is deepest and the far corner is barely touched.
+     A flat colour here moved the entire page in lockstep, which is what read
+     as a switch being flipped rather than as light moving across a surface. */
+  background: radial-gradient(
+    120% 120% at 0% 0%,
+    var(--breathe-color) 0%,
+    color-mix(in srgb, var(--breathe-color) 55%, transparent) 30%,
+    transparent 62%
+  );
+  transform-origin: 0% 0%;
+  animation: field-breathe 16s ease-in-out 3.35s infinite alternate backwards;
+  will-change: transform, opacity;
+}
+
+/* Scale from the corner rather than animating the gradient's stops: stops need
+   @property to interpolate and repaint the whole layer every frame, whereas a
+   transform on an already-rasterised layer is compositor-only. The visual is
+   the same — the tinted region swells out of the corner and recedes.
+   Peak opacity is higher than the flat version's 0.32 because most of this
+   layer is transparent; the darkest point lands at a comparable value. */
+@keyframes field-breathe {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1.55);
+    opacity: 0.5;
   }
 }
 

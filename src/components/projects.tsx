@@ -7,6 +7,10 @@ import { SectionHeading } from "@/components/section-heading";
  * the pitch, the story detail, stack chips, and (where the résumé backs
  * one) a measured result. Plain native scrolling — the pinned horizontal
  * gallery this replaces was rejected for hijacking the scroll.
+ *
+ * Each row links to its repo. The row already had `data-cursor="view"` and a
+ * hover arrow promising navigation while going nowhere, so this completes an
+ * affordance that was already being advertised.
  */
 export function Projects() {
   return (
@@ -36,13 +40,27 @@ export function Projects() {
                   </span>
 
                   <div>
-                    <h3 className="flex items-baseline gap-3 font-display text-3xl font-medium leading-tight text-ink transition-colors duration-300 group-hover:text-signal sm:text-4xl">
-                      {p.tag}
+                    <h3 className="flex items-baseline gap-3 font-display text-3xl leading-tight text-ink transition-colors duration-300 group-hover:text-signal sm:text-4xl">
+                      {/* Stretched link: the anchor wraps only the title, so its
+                          accessible name is just the project, but the ::after
+                          covers the whole row so the entire thing is clickable.
+                          Wrapping the row itself would swallow the stack chips
+                          into the link text. Focus ring goes on the title, not
+                          the invisible overlay, so keyboard focus is visible. */}
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-sm after:absolute after:inset-0 after:content-[''] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+                      >
+                        {p.tag}
+                        <span className="sr-only"> — view source on GitHub (opens in a new tab)</span>
+                      </a>
                       <span
                         aria-hidden
                         className="-translate-x-3 text-2xl opacity-0 transition-all duration-500 ease-out group-hover:translate-x-0 group-hover:opacity-100"
                       >
-                        →
+                        ↗
                       </span>
                     </h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-ink sm:text-base">

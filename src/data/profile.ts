@@ -80,7 +80,8 @@ export const projects = [
     detail:
       "Built solo end to end: schema design, REST API, and the React client. PWA install prompts kept freelancers checking bids without an app-store detour.",
     stack: ["React", "Node.js", "Express", "MongoDB", "Stripe", "PWA"],
-    stat: "25+ transactions in month one",
+    stat: null,
+    href: "https://github.com/divyaprakash29/Hustle-Hub",
   },
   {
     slug: "libraryapp",
@@ -90,6 +91,7 @@ export const projects = [
       "Ran usability testing with 15+ users on paper and Figma prototypes before a line of code shipped. The room-booking flow changed twice because of what those sessions turned up.",
     stack: ["Figma", "UX Research", "Prototyping", "Accessibility"],
     stat: "−40% booking steps",
+    href: "https://github.com/divyaprakash29/Northeastern_Library_App",
   },
   {
     slug: "healthsystem",
@@ -99,6 +101,7 @@ export const projects = [
       "A coursework capstone: one shared patient database behind a Java Swing front end, built for three role types — front desk, nursing, and diagnostics.",
     stack: ["Java Swing", "Systems Design"],
     stat: null,
+    href: "https://github.com/divyaprakash29/Hospital-Management-System",
   },
   {
     slug: "cloudnativeapp",
@@ -108,6 +111,7 @@ export const projects = [
       "Infrastructure as code from day one — a single Terraform apply stands up the VPC and RDS instance, and GitHub Actions deploys on every push to main.",
     stack: ["Python", "FastAPI", "AWS", "Terraform", "CI/CD"],
     stat: null,
+    href: "https://github.com/divyaprakash29/webapp",
   },
 ];
 

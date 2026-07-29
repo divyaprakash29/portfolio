@@ -94,7 +94,7 @@ export function Preloader() {
                     to sit closer in temperature to the coral rule, but the
                     curtain now hands off to a page whose type is #fff — and a
                     bone-to-white shift on the lift read as a colour pop. */}
-                <h2 className="pl-name flex justify-center font-display font-medium text-[clamp(2rem,6.5vw,6.5rem)] leading-none text-white">
+                <h2 className="pl-name flex justify-center font-display text-[clamp(2rem,6.5vw,6.5rem)] leading-none text-white">
                   {NAME.split("").map((char, i) => (
                     <span
                       key={i}
@@ -107,7 +107,13 @@ export function Preloader() {
                 </h2>
               </div>
 
-              <div className="pl-rule mt-7 h-px w-16 bg-[#f28763] sm:w-24" />
+              {/* Hardcoded to the DARK accent, not bg-signal, and deliberately
+                  so: the curtain is always dark (#061317) regardless of theme,
+                  so the token would resolve to the light theme's #131517 for
+                  light-mode visitors — a near-black rule on a near-black panel.
+                  Keep this in step with .dark's --accent by hand; it was left
+                  at the original #f28763 through several accent changes. */}
+              <div className="pl-rule mt-7 h-px w-16 bg-white sm:w-24" />
             </motion.div>
           </motion.div>
         )}

@@ -82,7 +82,7 @@ export function CustomCursor() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
             transition={{ duration: 0.22, ease: [0.16, 0.84, 0.44, 1] }}
-            className="flex h-14 w-14 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--coral)_70%,transparent)] bg-[color-mix(in_srgb,var(--canvas)_90%,transparent)] font-mono text-[0.65rem] tracking-wide text-marker shadow-2 backdrop-blur"
+            className="flex h-14 w-14 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--accent-soft)_70%,transparent)] bg-[color-mix(in_srgb,var(--canvas)_90%,transparent)] font-mono text-[0.65rem] tracking-wide text-marker shadow-2 backdrop-blur"
           >
             {LABELS[variant]}
           </motion.span>

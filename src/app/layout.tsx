@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/custom-cursor";
@@ -7,36 +8,25 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { Preloader } from "@/components/preloader";
 import { GrainField } from "@/components/grain-field";
 
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
-
-// Inter is the body face Luma actually falls back to. Variable font — no
-// weight array, same rule as the display face below (see CLAUDE.md).
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-// Fraunces replaces Playfair Display: the closest free stand-in for New
-// Spirit, the Adobe Fonts serif Luma uses and which we can't license here.
+// Two families, down from three (Fraunces + Inter + IBM Plex Mono).
 //
-// `axes` is not optional decoration. Fraunces ships an optical-size axis, and
-// Next subsets a variable font down to the wght axis unless the others are
-// asked for by name — without `opsz` the glyphs stay at their small-text
-// design (chunky, tight) at 7rem, which is exactly the size we use it at.
-// SOFT rounds the terminals; that softness is most of what makes it read like
-// New Spirit rather than like another Playfair.
-const fraunces = Fraunces({
+// Instrument Serif is NOT a variable font — Google ships it at a single 400
+// weight. That's the opposite of the rule the rest of this file follows, so it
+// takes an explicit `weight` and there is no heavier cut to reach for: every
+// `font-medium`/`font-semibold` on display type had to come off, or the browser
+// synthesises a faux-bold, which on a serif this high-contrast smears the
+// hairlines. See CLAUDE.md.
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  axes: ["SOFT", "opsz"],
-  variable: "--font-fraunces",
+  weight: "400",
+  variable: "--font-instrument-serif",
   display: "swap",
 });
+
+// Geist is not in next/font/google at all on Next 14 — it only exists as
+// Vercel's own package, which self-hosts the files (no Google request, same as
+// next/font would give us). It exposes a ready-made instance rather than a
+// constructor, so there's nothing to configure here.
 
 export const metadata: Metadata = {
   title: "Divya Prakash — Frontend Engineer",
@@ -52,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plexMono.variable} ${inter.variable} ${fraunces.variable} font-sans antialiased bg-canvas text-ink`}
+        className={`${GeistSans.variable} ${instrumentSerif.variable} font-sans antialiased bg-canvas text-ink`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />

@@ -38,7 +38,7 @@ export function About() {
         <div className="mt-10 grid grid-cols-1 gap-12 lg:mt-14 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           {/* narrative */}
           <Reveal>
-            <p className="max-w-xl font-display text-3xl font-medium leading-snug text-ink sm:text-4xl">
+            <p className="max-w-xl font-display text-3xl leading-snug text-ink sm:text-4xl">
               <MaskedText text="The interface is the product." accentWords={["is"]} />
             </p>
             <p className="mt-7 max-w-xl text-base leading-relaxed text-ink sm:text-lg">
