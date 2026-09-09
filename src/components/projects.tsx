@@ -16,7 +16,7 @@ export function Projects() {
   return (
     <section id="projects" className="relative border-t border-line py-20 lg:py-28">
       <div className="mx-auto w-full max-w-content px-5 sm:px-8">
-        <SectionHeading label="projects" aside={`${projects.length} shipped`} />
+        <SectionHeading label="projects" aside={`${projects.length} selected projects`} />
 
         {/* .projects-index dims the rows you aren't pointing at (CSS only, in
             globals.css, and hover-capable pointers only) — the editorial-index

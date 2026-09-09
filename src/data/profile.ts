@@ -1,180 +1,106 @@
 export const profile = {
   name: "Divya Prakash",
-  role: "Frontend Engineer",
-  focus: "design systems, accessibility",
+  role: "Data Analyst",
+  focus: "SQL, Python, Tableau & Snowflake",
   email: "divyaprakash2999@gmail.com",
-  location: "Boston, MA",
+  location: "United States · Open to relocate",
   github: "https://github.com/divyaprakash29",
-  linkedin: "https://linkedin.com/in/divya-prakash29/",
-  lede:
-    "I build interfaces the way I test them — with real users, not just unit tests. Three years shipping production React at Prodapt Solutions, now sharpening the design side of that equation at Northeastern.",
+  linkedin: "https://www.linkedin.com/in/divya-prakash29/",
+  resume: "/CV.pdf",
+  intro: "I turn complex data into actionable insights with SQL, Python, Tableau, and Snowflake. Two years of experience analyzing user behavior, measuring chatbot performance, and automating reporting.",
+  lede: "I’m a Data Analyst with two years of experience connecting complex datasets to business decisions. At Prodapt Solutions, I analyzed conversational AI interactions to understand where users dropped off and help teams improve self-service experiences.",
+  aboutHeadline: "From complex data to clear decisions.",
+  educationSummary: "My background includes an M.S. in Information Systems from Northeastern University (May 2026) and a B.E. in Information Science from Jyothy Institute of Technology (June 2021). My work spans statistical analysis, data modeling, automated reporting, and machine learning.",
+  contactHeadline: "Let’s turn data into better decisions.",
 };
 
-// Drawn from real résumé facts — 3 yrs at Prodapt, 4 featured projects,
-// and the measured perf win from the code-splitting work. Don't inflate these.
+// All claims, metrics, and project links come from DivyaPrakash_Resume_DA.pdf.
 export const stats = [
-  { value: "3+", label: "Years of Experience" },
-  { value: "4", label: "Projects Shipped" },
-  { value: "35%", label: "Faster Load Times" },
+  { value: "2", label: "Years of Experience" },
+  { value: "30M+", label: "Transactions Analyzed" },
+  { value: "30%", label: "Less Reporting Time" },
 ];
 
-// Mirrors "Divya Prakash_FrontEnd_Engineer.pdf" (WORK EXPERIENCE section).
-// Wording is trimmed for the web but every claim and number is from the
-// résumé — keep it that way.
 export const experience = [
   {
     company: "Prodapt Solutions",
     location: "India",
-    title: "Software Engineer",
-    dates: "Oct 2021 – Aug 2024",
+    title: "Data Analyst",
+    dates: "Oct 2021 – Aug 2023",
     highlights: [
-      {
-        text: "Built responsive web applications with JavaScript, Next.js, Tailwind CSS, and Material UI across telecom customer platforms.",
-        stat: "+20% user engagement",
-      },
-      {
-        text: "Designed and integrated RESTful APIs with Axios for real-time data flow across billing and service-management systems.",
-        stat: "−25% support requests",
-      },
-      {
-        text: "Cut load times with code splitting and lazy loading while keeping Lighthouse scores above 90.",
-        stat: "−35% load time",
-      },
-      {
-        text: "Turned Figma and Balsamiq wireframes into production-ready UI with cross-functional agile teams.",
-        stat: "+20% faster delivery",
-      },
-      {
-        text: "Validated UI with Jest and ran usability testing aligned with user-centered design.",
-        stat: "−30% UI defects",
-      },
+      { text: "Analyzed customer service chatbot logs in Snowflake with SQL and Python to identify user drop-off trends and inform product changes.", stat: "−20% user abandonment" },
+      { text: "Designed Tableau dashboards tracking intent recognition accuracy, escalation rate, session duration, and self-service resolution for product and engineering teams.", stat: null },
+      { text: "Partnered with product and engineering teams on A/B testing and statistical analysis to validate a new chatbot prompt structure.", stat: "+25% self-service resolution" },
+      { text: "Automated daily chatbot telemetry pipelines in Snowflake using dbt, transforming raw interactions into analytics-ready datasets.", stat: "−30% manual reporting turnaround" },
+      { text: "Maintained dbt models and SQL transformations in GitHub, documenting data sources and dependencies to improve data quality, governance, and lineage.", stat: null },
     ],
   },
   {
     company: "Tech Fortune Technologies",
     location: "India",
-    title: "Front End Engineer Intern",
+    title: "Machine Learning Intern",
     dates: "Mar 2021 – Apr 2021",
     highlights: [
-      {
-        text: "Built responsive UI components with React.js, TypeScript, and Redux for cross-device compatibility.",
-        stat: "−20% UI inconsistencies",
-      },
-      {
-        text: "Implemented Redux Toolkit state management and optimized rendering performance.",
-        stat: "−25% component load time",
-      },
-      {
-        text: "Collaborated on prototyping and interaction design with Framer and Notion, contributing to design systems.",
-        stat: null,
-      },
+      { text: "Built wine-quality classifiers across 1,599 samples using Python and scikit-learn, comparing Random Forest, SVM, KNN, Decision Tree, and Logistic Regression.", stat: "90% test accuracy" },
+      { text: "Engineered an ML pipeline with StandardScaler, GridSearchCV, cross-validation, and an 80/20 train-test split to prevent data leakage and improve generalization.", stat: "88.5% cross-validation accuracy" },
+      { text: "Explored feature relationships and class imbalance with Pandas, Matplotlib, and Seaborn, restructuring the target into a binary classification problem.", stat: null },
     ],
   },
 ];
 
 export const projects = [
   {
-    slug: "hustlehub",
-    tag: "HustleHub",
-    desc: "A full-stack freelance marketplace — clients post work, freelancers bid, Stripe handles the money.",
-    detail:
-      "Built solo end to end: schema design, REST API, and the React client. PWA install prompts kept freelancers checking bids without an app-store detour.",
-    stack: ["React", "Node.js", "Express", "MongoDB", "Stripe", "PWA"],
-    stat: null,
-    href: "https://github.com/divyaprakash29/Hustle-Hub",
+    slug: "ecommerce-analytics",
+    tag: "E-Commerce Customer Behavior & Product Demand Analytics",
+    desc: "Purchasing patterns, customer segments, and product demand insights from 30M+ e-commerce transactions.",
+    detail: "Used EDA, RFM segmentation, and K-Means clustering to support retention and marketing. Compared Logistic Regression, Decision Tree, and Random Forest models to inform inventory and demand planning.",
+    stack: ["Python", "Pandas", "NumPy", "scikit-learn", "RFM", "K-Means"],
+    stat: "0.84 ROC-AUC with Random Forest",
+    href: "https://github.com/divyaprakash29/E-Commerce-Customer-Behavior-Product-Demand-Analytics",
   },
   {
-    slug: "libraryapp",
-    tag: "LibraryApp",
-    desc: "Northeastern's library, redesigned mobile-first. Room booking and event discovery, shaped by real usability testing.",
-    detail:
-      "Ran usability testing with 15+ users on paper and Figma prototypes before a line of code shipped. The room-booking flow changed twice because of what those sessions turned up.",
-    stack: ["Figma", "UX Research", "Prototyping", "Accessibility"],
-    stat: "−40% booking steps",
-    href: "https://github.com/divyaprakash29/Northeastern_Library_App",
+    slug: "ai-governance",
+    tag: "Secure AI Governance Engine",
+    desc: "A RAG-powered compliance reasoning system with 100% citation groundedness and 91%+ accuracy.",
+    detail: "Combined document chunking, embeddings, and vector search with ReAct agent workflows. Validated the system with 28 unit tests and 5 integration tests.",
+    stack: ["Python", "GPT-4o", "LangChain", "LangGraph", "ChromaDB", "Docker", "RAG"],
+    stat: "80% reduction in prompt token usage",
+    href: "https://github.com/divyaprakash29/Secure_AI_Governance_Engine",
   },
   {
-    slug: "healthsystem",
-    tag: "HealthSystem",
-    desc: "Patient records and diagnostics for a clinical front desk, built to hold up during a busy shift.",
-    detail:
-      "A coursework capstone: one shared patient database behind a Java Swing front end, built for three role types — front desk, nursing, and diagnostics.",
-    stack: ["Java Swing", "Systems Design"],
+    slug: "cloud-native-webapp",
+    tag: "Cloud Native Webapp",
+    desc: "A scalable Python backend with automated AWS infrastructure and zero-downtime deployments.",
+    detail: "Integrated FastAPI and REST APIs with AWS services including S3, RDS, and CloudWatch. Automated infrastructure and deployments with Terraform, Packer-built AMIs, and GitHub Actions, with encryption and centralized logging.",
+    stack: ["Python", "FastAPI", "AWS", "Terraform", "Packer", "GitHub Actions"],
     stat: null,
-    href: "https://github.com/divyaprakash29/Hospital-Management-System",
-  },
-  {
-    slug: "cloudnativeapp",
-    tag: "CloudNativeApp",
-    desc: "A FastAPI backend that deploys itself — Terraform for infrastructure, GitHub Actions for everything after git push.",
-    detail:
-      "Infrastructure as code from day one — a single Terraform apply stands up the VPC and RDS instance, and GitHub Actions deploys on every push to main.",
-    stack: ["Python", "FastAPI", "AWS", "Terraform", "CI/CD"],
-    stat: null,
-    href: "https://github.com/CSYE6225-DivyaPrakash/webapp",
+    href: "https://github.com/orgs/CSYE6225-DivyaPrakash/repositories",
   },
 ];
 
 export type Project = (typeof projects)[number];
 
 export const skills = [
-  {
-    group: "frontend",
-    path: "src/",
-    items: [
-      "React.js",
-      "Redux",
-      "JavaScript",
-      "TypeScript",
-      "HTML5",
-      "CSS3",
-      "Bootstrap",
-      "jQuery",
-      "Framer Motion",
-    ],
-  },
-  {
-    group: "backend",
-    path: "src/",
-    items: ["Node.js", "Express.js", "FastAPI", "REST APIs", "Java", "Python"],
-  },
-  {
-    group: "data",
-    path: "src/",
-    items: ["MongoDB", "MySQL", "PostgreSQL", "NoSQL"],
-  },
-  {
-    group: "ux",
-    path: "design/",
-    items: [
-      "Figma",
-      "Framer",
-      "Balsamiq",
-      "Prototyping",
-      "Design Systems",
-      "Usability Testing",
-      "Accessibility",
-    ],
-  },
-  {
-    group: "tools",
-    path: "./",
-    items: ["Git", "Postman", "JIRA", "Confluence", "Notion"],
-  },
+  { group: "Languages & Databases", items: ["Python", "SQL", "R", "PostgreSQL", "MySQL", "Oracle", "MongoDB", "PL/SQL", "Excel"] },
+  { group: "Analysis & Machine Learning", items: ["Pandas", "NumPy", "scikit-learn", "Jupyter Notebooks", "EDA", "A/B Testing", "Statistical Analysis", "Data Modeling"] },
+  { group: "Visualization & Reporting", items: ["Tableau", "Power BI", "Matplotlib", "Seaborn", "KPI Dashboards", "Automated Reporting"] },
+  { group: "Cloud Platforms", items: ["Snowflake", "AWS EC2", "AWS S3", "AWS Lambda", "Azure"] },
+  { group: "Pipelines & Orchestration", items: ["dbt", "Airflow", "Docker", "FastAPI"] },
+  { group: "Tools & Collaboration", items: ["Git", "GitHub", "Jira", "Data Quality", "Data Lineage"] },
 ];
 
 export const aboutViews = {
-  engineer: [
-    { key: "role", value: "Frontend Engineer" },
-    { key: "based", value: "Boston, MA" },
-    { key: "degree", value: "M.S. Information Systems" },
-    { key: "school", value: "Northeastern, 2026" },
-    { key: "prior", value: "B.E. Information Science, 2021" },
+  analyst: [
+    { key: "role", value: "Data Analyst" },
+    { key: "based", value: "United States" },
+    { key: "mobility", value: "Open to relocate" },
+    { key: "toolkit", value: "SQL, Python, Tableau, Snowflake" },
+    { key: "focus", value: "User behavior & conversational AI analytics" },
   ],
-  designer: [
-    { key: "role", value: "UX-minded engineer" },
-    { key: "toolkit", value: "Figma, Framer, Balsamiq" },
-    { key: "practice", value: "usability testing, design systems" },
-    { key: "belief", value: "the interface is the product" },
+  education: [
+    { key: "master’s", value: "M.S. Information Systems" },
+    { key: "university", value: "Northeastern University · May 2026" },
+    { key: "bachelor’s", value: "B.E. Information Science" },
+    { key: "institute", value: "Jyothy Institute of Technology · June 2021" },
   ],
 };

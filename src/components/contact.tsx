@@ -18,8 +18,8 @@ export function Contact() {
         <Reveal delay={0.08}>
           <p className="mt-10 max-w-3xl font-display text-4xl leading-tight text-ink sm:text-5xl lg:mt-14 lg:text-6xl">
             <MaskedText
-              text="Let's build something people actually use."
-              accentWords={["actually"]}
+              text={profile.contactHeadline}
+              accentWords={["better"]}
             />
           </p>
         </Reveal>
@@ -36,13 +36,13 @@ export function Contact() {
               </a>
             </Magnetic>
 
-            <ul className="flex items-center gap-2 font-mono text-sm">
+            <ul className="flex flex-wrap items-center gap-2 font-mono text-sm">
               {[
                 { label: "github", href: profile.github },
                 { label: "linkedin", href: profile.linkedin },
                 // Same path the previous deployment served, so external links
                 // to /CV.pdf still resolve.
-                { label: "résumé", href: "/CV.pdf" },
+                { label: "résumé", href: profile.resume },
               ].map((s) => (
                 <li key={s.label}>
                   <Magnetic strength={0.25}>

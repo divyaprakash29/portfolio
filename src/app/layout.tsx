@@ -29,9 +29,9 @@ const instrumentSerif = Instrument_Serif({
 // constructor, so there's nothing to configure here.
 
 export const metadata: Metadata = {
-  title: "Divya Prakash — Frontend Engineer",
+  title: "Divya Prakash — Data Analyst",
   description:
-    "Portfolio of Divya Prakash, a frontend engineer working across code and design.",
+    "Portfolio of Divya Prakash, a Data Analyst specializing in SQL, Python, Tableau, Snowflake, user behavior analytics, and automated reporting.",
 };
 
 export default function RootLayout({

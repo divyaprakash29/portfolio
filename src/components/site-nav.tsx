@@ -44,9 +44,8 @@ export function SiteNav() {
       )}
     >
       <div className="mx-auto flex max-w-content items-center justify-between gap-2 px-5 py-3 sm:px-8">
-        <a href="#top" className="whitespace-nowrap font-mono text-[1.05rem] font-semibold tracking-tight">
-          <span className="text-signal">&lt;</span>DP
-          <span className="text-signal"> /&gt;</span>
+        <a href="#top" aria-label="Divya Prakash ? home" className="inline-flex min-h-11 min-w-11 items-center whitespace-nowrap font-mono text-[1.05rem] font-semibold tracking-tight">
+          <span className="text-signal">DP</span>
         </a>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 font-mono text-sm sm:flex sm:gap-2 lg:gap-3">
