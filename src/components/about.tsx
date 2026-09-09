@@ -28,7 +28,7 @@ const row: Variants = {
 };
 
 export function About() {
-  const [lens, setLens] = useState<Lens>("engineer");
+  const [lens, setLens] = useState<Lens>("analyst");
 
   return (
     <section id="about" className="relative border-t border-line py-20 lg:py-28">
@@ -39,16 +39,13 @@ export function About() {
           {/* narrative */}
           <Reveal>
             <p className="max-w-xl font-display text-3xl leading-snug text-ink sm:text-4xl">
-              <MaskedText text="The interface is the product." accentWords={["is"]} />
+              <MaskedText text={profile.aboutHeadline} accentWords={["clear"]} />
             </p>
             <p className="mt-7 max-w-xl text-base leading-relaxed text-ink sm:text-lg">
               {profile.lede}
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-ink sm:text-lg">
-              These days that means Boston: an M.S. in Information Systems at
-              Northeastern, with as many hours in Figma and usability sessions
-              as in React — because the best fixes I&apos;ve shipped started as
-              questions asked before any code was written.
+              {profile.educationSummary}
             </p>
           </Reveal>
 

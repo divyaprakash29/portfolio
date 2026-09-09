@@ -156,7 +156,7 @@ export function Hero() {
           {/* left: headline block */}
           <div>
             <motion.h1
-              aria-label="Frontend Engineer"
+              aria-label={profile.role}
               style={{ y: reduceMotion ? 0 : headlineY }}
               className="font-display leading-[0.95] tracking-tight"
             >
@@ -164,13 +164,13 @@ export function Hero() {
                   two headings rather than one; coral survives as the per-letter
                   hover, which is where it does more work anyway. */}
               <LetterLine
-                text="Frontend"
+                text="Data"
                 delay={0.15}
                 className="text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
                 hoverClass="hover:text-signal"
               />
               <LetterLine
-                text="Engineer"
+                text="Analyst"
                 delay={0.4}
                 className="pl-[0.12em] text-[clamp(3.2rem,10vw,7.5rem)] text-ink"
                 hoverClass="hover:text-signal"
@@ -181,9 +181,7 @@ export function Hero() {
               variants={item}
               className="mt-7 max-w-lg text-base leading-relaxed text-ink sm:text-lg"
             >
-              Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. I build
-              interfaces the way I test them — with real users, not just unit tests. Three years
-              shipping production React, now sharpening the design side at Northeastern.
+              Hi! I&apos;m <span className="font-semibold text-ink">Divya</span>. {profile.intro}
             </motion.p>
 
             <motion.div variants={item} className="mt-8">
@@ -202,7 +200,7 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
               </span>
-              Available for full-time opportunities
+              Available for full-time data analyst opportunities
             </motion.p>
           </div>
 
